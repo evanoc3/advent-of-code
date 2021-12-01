@@ -1,0 +1,8 @@
+{
+	"files.exclude": {
+		"**/__init__.py": true
+	},
+	"editor.insertSpaces": false,
+	"editor.tabSize": 2,
+	"editor.tabCompletion": "on"
+}
