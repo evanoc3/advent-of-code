@@ -4,5 +4,8 @@
 	},
 	"editor.insertSpaces": false,
 	"editor.tabSize": 2,
-	"editor.tabCompletion": "on"
+	"editor.tabCompletion": "on",
+	"terminal.integrated.env.osx": {
+    "PYTHONPATH": "${workspaceFolder}/src:${env:PYTHONPATH}"
+  },
 }
