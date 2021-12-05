@@ -77,7 +77,7 @@ def parse_input(input: list[str]) -> tuple[list[int], list[Board]]:
 
 
 def main() -> None:
-	input_file_path = Path(__file__).parent / "input.txt"
+	input_file_path = Path(__file__).parents[1] / "input.txt"
 
 	called_numbers: list[int]
 	boards: list[Board]
