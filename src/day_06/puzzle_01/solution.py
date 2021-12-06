@@ -29,7 +29,7 @@ def simulation_tick(fishes: list[Lanternfish]) -> list[Lanternfish]:
 
 
 def main() -> None:
-	input_file_path = Path(__file__).parent / "input.txt"
+	input_file_path = Path(__file__).parents[1] / "input.txt"
 
 	fishes: list[Lanternfish] = []
 
@@ -38,9 +38,9 @@ def main() -> None:
 	
 	for i in range(1, 81):
 		simulation_tick(fishes)
-		print(f"Day {i}. fish population: {len(fishes)}")
+		if i == 80:
+			print(f"Day {i}. fish population: {len(fishes)}")
 	
-	# print(f"Day 80. Fish population: {len(fishes)}")
 	return
 
 
