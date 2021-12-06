@@ -17,15 +17,16 @@ class LineSegment:
 		self.x2 = x2
 		self.y2 = y2
 
-	def get_points(self) -> list[Point]:
-		points: list[Point] = []
-		if self.x1 == self.x2:
-			for y in range(min(self.y1, self.y2), max(self.y1, self.y2) + 1):
-				points.append(Point(self.x1, y))
-		elif self.y1 == self.y2:
-			for x in range(min(self.x1, self.x2), max(self.x1, self.x2) + 1):
-				points.append(Point(x, self.y1))
-		return points
+
+def get_points(segment: LineSegment) -> list[Point]:
+	points: list[Point] = []
+	if segment.x1 == segment.x2:
+		for y in range(min(segment.y1, segment.y2), max(segment.y1, segment.y2) + 1):
+			points.append(Point(segment.x1, y))
+	elif segment.y1 == segment.y2:
+		for x in range(min(segment.x1, segment.x2), max(segment.x1, segment.x2) + 1):
+			points.append(Point(x, segment.y1))
+	return points
 
 
 def get_map_size(segments: list[LineSegment]) -> tuple[int, int]:
@@ -41,33 +42,40 @@ def create_map(max_x: int, max_y: int) -> list[list[int]]:
 	return map
 
 
-def main() -> None:
-	input_file_path = Path(__file__).parent / "input.txt"
+def parse_input(lines: list[str]) -> list[LineSegment]:
 	segments: list[LineSegment] = []
-	
-	with open(input_file_path, "r") as input_file:
-		line = input_file.readline()
-		while line:
-			segment_match = match(r"(\d+),(\d+)\s->\s(\d+),(\d+)\n", line)
-			if segment_match:
-				x1, y1, x2, y2 = int(segment_match.group(1)), int(segment_match.group(2)), int(segment_match.group(3)), int(segment_match.group(4))
-				segments.append(LineSegment(x1, y1, x2, y2))
-			line = input_file.readline()
+	for line in lines:
+		segment_match = match(r"(\d+),(\d+)\s->\s(\d+),(\d+)\n", line)
+		if segment_match:
+			x1, y1, x2, y2 = int(segment_match.group(1)), int(segment_match.group(2)), int(segment_match.group(3)), int(segment_match.group(4))
+			segments.append(LineSegment(x1, y1, x2, y2))
+	return segments
 
-	map_x, map_y = get_map_size(segments)
-	map = create_map(map_x, map_y)
 
-	for segment in segments:
-		for point in segment.get_points():
-			map[point.y][point.x] += 1
-	
+def count_overlaps(map: list[list[int]]) -> int:
 	double_overlaps = 0
 	for y in range(len(map)):
 		for x in range(len(map[y])):
 			if map[y][x] >= 2:
 				double_overlaps += 1
+	return double_overlaps
+
+
+def main() -> None:
+	input_file_path = Path(__file__).parents[1] / "input.txt"
+	segments: list[LineSegment] = []
 	
-	print(f"There were {double_overlaps} points with 2 or more overlapping line segments")
+	with open(input_file_path, "r") as input_file:
+		segments = parse_input(input_file.readlines())
+
+	map_x, map_y = get_map_size(segments)
+	map = create_map(map_x, map_y)
+
+	for segment in segments:
+		for point in get_points(segment):
+			map[point.y][point.x] += 1
+	
+	print(f"There were {count_overlaps(map)} points with 2 or more overlapping line segments")
 	return
 
 
