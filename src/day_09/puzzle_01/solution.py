@@ -2,16 +2,19 @@
 
 from pathlib import Path
 
+Map = list[list[int]]
+Point = tuple[int, int]
 
-def parse_input(input_lines: list[str]) -> list[list[int]]:
+
+def parse_input(input_lines: list[str]) -> Map:
 	rows: list[list[str]] = []
 	for line in [line.strip() for line in input_lines]:
 		rows.append([ int(d) for d in line ])
 	return rows
 
 
-def get_lowest_points(height_map: list[list[int]]) -> list[tuple[int, int]]:
-	local_minimums: list[tuple[int, int]] = []
+def get_lowest_points(height_map: Map) -> list[Point]:
+	local_minimums: list[Point] = []
 
 	for y in range(len(height_map)):
 		for x in range(len(height_map[y])):
@@ -22,7 +25,7 @@ def get_lowest_points(height_map: list[list[int]]) -> list[tuple[int, int]]:
 	return local_minimums
 
 
-def get_adjacent_points(height_map: list[list[int]], point: tuple[int, int]) -> list[tuple[int, int]]:
+def get_adjacent_points(height_map: Map, point: Point) -> list[Point]:
 	min_y, min_x = 0, 0
 	max_y, max_x = len(height_map) - 1, len(height_map[0]) - 1
 
@@ -30,18 +33,18 @@ def get_adjacent_points(height_map: list[list[int]], point: tuple[int, int]) -> 
 
 	adjacent_points: list[int] = []
 	if y > min_y:
-		adjacent_points.append(height_map[y-1][x]) # top adjacent point
+		adjacent_points.append((x, y-1)) # top adjacent point
 	if y < max_y:
-		adjacent_points.append(height_map[y+1][x]) # bottom adjacent point
+		adjacent_points.append((x, y+1)) # bottom adjacent point
 	if x > min_x:
-		adjacent_points.append(height_map[y][x-1]) # left adjacent point
+		adjacent_points.append((x-1, y)) # left adjacent point
 	if x < max_x:
-		adjacent_points.append(height_map[y][x+1]) # right adjacent point
+		adjacent_points.append((x+1, y)) # right adjacent point
 	
 	return adjacent_points
 
 
-def get_risk_scores(height_map: list[list[int]], lowest_points: list[tuple[int, int]]) -> list[int]:
+def get_risk_scores(height_map: Map, lowest_points: list[Point]) -> list[int]:
 	return [ height_map[point[1]][point[0]] + 1 for point in lowest_points ]
 
 
