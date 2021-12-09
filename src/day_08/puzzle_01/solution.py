@@ -20,7 +20,7 @@ def count_occurrences(flat_output_segments: list[list[str]]) -> dict[int, int]:
 def main() -> None:
 	output_segments: list[list[str]] = []
 
-	input_file_path = Path(__file__).parent / "input.txt"
+	input_file_path = Path(__file__).parents[1] / "input.txt"
 	with open(input_file_path, "r") as input_file:
 		output_segments = parse_input(input_file.readlines())
 
