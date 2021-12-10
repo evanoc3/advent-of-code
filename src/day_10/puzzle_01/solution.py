@@ -81,7 +81,7 @@ def get_score(corrupted_char: str) -> int:
 def main() -> None:
 	input_lines: list[str] = []
 
-	input_file_path = Path(__file__).parent / "input.txt"
+	input_file_path = Path(__file__).parents[1] / "input.txt"
 	with open(input_file_path, "r") as input_file:
 		input_lines = parse_input(input_file.readlines())
 	
