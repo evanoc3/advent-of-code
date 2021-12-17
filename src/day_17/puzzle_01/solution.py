@@ -42,7 +42,7 @@ def plot_velocity(x_vel: int, y_vel: int, limit_x: int, limit_y: int) -> list[Po
 
 	plot: list[Point] = [ cur ]
 
-	while not (cur.x > limit_x or (x_vel == 0 and cur.y < limit_y)):
+	while  cur.x < limit_x and cur.y > limit_y:
 		cur = Point(cur.x + x_vel, cur.y + y_vel)
 		plot.append(cur)
 
