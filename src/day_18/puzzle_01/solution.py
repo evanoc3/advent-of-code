@@ -8,7 +8,7 @@ SnailFishNumberComponent = Union[int, "SnailFishNumber"]
 SnailFishNumber = tuple[SnailFishNumberComponent, SnailFishNumberComponent]
 
 
-def main() -> None:
+def _main() -> None:
 	nums: list[SnailFishNumber] = []
 
 	input_file_path = Path(__file__).parents[1] / "input.txt"
@@ -18,7 +18,7 @@ def main() -> None:
 	sum = nums[0]
 	for num in nums[1:]:
 		sum = add_numbers(sum, num)
-		sum = reduce_number(sum)
+		sum = _reduce_number(sum)
 	
 	print(f"The magnitude of the sum of the numbers is: {get_magnitude(sum)}")
 	return
@@ -29,13 +29,13 @@ def parse_input(input_lines: str) -> list[SnailFishNumber]:
 
 	for input_line in input_lines:
 		input_line = input_line.strip()
-		_, new_number = parse_number(input_line)
+		_, new_number = _parse_number(input_line)
 		nums.append(new_number)
 
 	return nums
 
 
-def parse_number(input_line: str, indx: int = 0) -> tuple[int, SnailFishNumber]:
+def _parse_number(input_line: str, indx: int = 0) -> tuple[int, SnailFishNumber]:
 	assert input_line[indx] == "["
 	indx += 1
 	
@@ -43,7 +43,7 @@ def parse_number(input_line: str, indx: int = 0) -> tuple[int, SnailFishNumber]:
 	if input_line[indx].isnumeric():
 		first_item = int(input_line[indx])
 	else: # input_line[indx] == "[" <- i.e. it has another SnailFishNumber as a child for the first item
-		indx, first_item = parse_number(input_line, indx)
+		indx, first_item = _parse_number(input_line, indx)
 	indx += 1
 
 	assert input_line[indx] == ","
@@ -53,7 +53,7 @@ def parse_number(input_line: str, indx: int = 0) -> tuple[int, SnailFishNumber]:
 	if input_line[indx].isnumeric():
 		second_item = int(input_line[indx])
 	else: # input_line[indx] == "[" <- i.e. it has another SnailFishNumber as a child for the second item
-		indx, second_item = parse_number(input_line, indx)
+		indx, second_item = _parse_number(input_line, indx)
 	indx += 1
 
 	assert input_line[indx] == "]"
@@ -62,31 +62,31 @@ def parse_number(input_line: str, indx: int = 0) -> tuple[int, SnailFishNumber]:
 
 def add_numbers(num1: SnailFishNumber, num2: SnailFishNumber) -> SnailFishNumber:
 	new_num = (num1, num2)
-	return reduce_number(new_num)
+	return _reduce_number(new_num)
 
 
-def reduce_number(num: SnailFishNumber) -> SnailFishNumber:
+def _reduce_number(num: SnailFishNumber) -> SnailFishNumber:
 	reduced = True
 	while reduced:
-		num, reduced, *_ = explode(num, 0)
+		num, reduced, *_ = _explode(num, 0)
 		if not reduced:
-			num, reduced = split(num)
+			num, reduced = _split(num)
 	return num
 
 
-def explode(num: SnailFishNumberComponent, depth: int = 0):
+def _explode(num: SnailFishNumberComponent, depth: int = 0):
 	if not isinstance(num, int):
 		l, r = num
 		if depth >= 4:
 			return 0, True, l, r
 		else:
-			l, reduced, expl, expr = explode(l, depth + 1)
+			l, reduced, expl, expr = _explode(l, depth + 1)
 			if reduced:
 				if expr != 0:
 					r = _add_left(r, expr)
 					expr = 0
 			else:
-				r, reduced, expl, expr = explode(r, depth + 1)
+				r, reduced, expl, expr = _explode(r, depth + 1)
 				if reduced:
 					if expl != 0:
 						l = _add_right(l, expl)
@@ -112,16 +112,16 @@ def _add_right(n, m):
 		return a, _add_right(b, m)
 
 
-def split(num: SnailFishNumber):
+def _split(num: SnailFishNumber):
 	if isinstance(num, int):
 		if num >= 10:
 			a = num // 2
 			return (a, num - a), True
 	else:
 		l, r = num
-		l, reduced = split(l)
+		l, reduced = _split(l)
 		if not reduced:
-			r, reduced = split(r)
+			r, reduced = _split(r)
 		if reduced:
 			return (l, r), True
 	return num, False
@@ -135,4 +135,4 @@ def get_magnitude(num: SnailFishNumber) -> int:
 
 
 if __name__ == "__main__":
-	main()
+	_main()
