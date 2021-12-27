@@ -13,25 +13,8 @@ def main() -> None:
 	with open(input_file_path, "r") as input_file:
 		detected_beacons = parse_input(input_file.readlines())
 	
-	done = set()
-	next = [ detected_beacons[0] ]
-	rest = detected_beacons[1:]
-	shifts = [(0,0,0)]
-	while next:
-		aligned = next.pop()
-		tmp = []
-		for candidate in rest:
-			r = try_align(aligned, candidate)
-			if r:
-				(updated, shift) = r
-				shifts.append(shift)
-				next.append(updated)
-			else:
-				tmp.append(candidate)
-		rest = tmp
-		done.update(aligned)
-	
-	print(f"The number of beacons is: {len(done)}")
+	beacons, _ = get_beacons(detected_beacons)
+	print(f"The number of beacons is: {len(beacons)}")
 	return
 
 
@@ -55,7 +38,28 @@ def parse_input(input_lines: list[str]) -> list[list[tuple[int, int, int]]]:
 	return detected_beacons
 
 
-def try_align(aligned, candidate):
+def get_beacons(detected_beacons: list[list[tuple[int, int, int]]]):
+	done = set()
+	next = [ detected_beacons[0] ]
+	rest = detected_beacons[1:]
+	shifts = [(0,0,0)]
+	while next:
+		aligned = next.pop()
+		tmp = []
+		for candidate in rest:
+			r = _try_align(aligned, candidate)
+			if r:
+				(updated, shift) = r
+				shifts.append(shift)
+				next.append(updated)
+			else:
+				tmp.append(candidate)
+		rest = tmp
+		done.update(aligned)
+	return done, shifts
+
+
+def _try_align(aligned, candidate):
 	ret = []
 	dl = []
 	dp = dpp = None
