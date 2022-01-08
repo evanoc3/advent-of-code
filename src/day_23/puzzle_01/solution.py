@@ -22,9 +22,6 @@ def main() -> None:
 def parse_input(input_lines: list[str]):
 	return (*((*line,) for line in input_lines),)
 
-def extend(state):
-  return (*state[:3], (*"  #D#C#B#A#",), (*"  #D#B#A#C#",), *state[3:],)
-
 def room_size(state):
   return len(state)-3
 
