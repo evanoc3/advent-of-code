@@ -1,1 +1,0 @@
-/Users/evanoc/dev/advent-of-code-2021/src/day_03/puzzle_01/input.txt
