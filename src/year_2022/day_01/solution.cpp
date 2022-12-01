@@ -70,5 +70,26 @@ int64_t Solution::sumOf(std::vector<int> vec) const {
 
 
 int64_t Solution::part2(const Input input) const {
-	return -1;
+	int64_t highest = 0;
+	int64_t secondHighest = 0;
+	int64_t thirdHighest = 0;
+
+	for(const auto& elf : input) {
+		const auto elfSum = sumOf(elf);
+		if(elfSum > highest) {
+			thirdHighest = secondHighest;
+			secondHighest = highest;
+			highest = elfSum;
+		}
+		else if(elfSum > secondHighest) {
+			thirdHighest = secondHighest;
+			secondHighest = elfSum;
+		}
+		else if(elfSum > thirdHighest) {
+			thirdHighest = elfSum;
+		}
+	}
+
+	const auto sum = highest + secondHighest + thirdHighest;
+	return sum;
 }
