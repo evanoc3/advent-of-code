@@ -24,6 +24,16 @@ add_library(
 target_include_directories(lib-advent-of-code PUBLIC src)
 
 
+# Main executable
+add_executable(
+	advent-of-code
+
+	src/main.cpp
+)
+
+target_link_libraries(advent-of-code PRIVATE lib-advent-of-code)
+
+
 # Test executable
 add_executable(
 	advent-of-code-tests
