@@ -26,14 +26,8 @@ const Input Solution::getInput() const {
 			continue;
 		}
 
-		const auto opponentPlay = decryptPlay(line.at(0));
-		const auto yourPlay = decryptPlay(line.at(2));
-
-		if(opponentPlay != RockPaperScissorsPlay::Invalid && yourPlay != RockPaperScissorsPlay::Invalid) {
-		const auto pair = std::pair<const RockPaperScissorsPlay, const RockPaperScissorsPlay>(opponentPlay, yourPlay);
+		const std::pair<const char, const char> pair(line.at(0), line.at(2));
 		input.push_back(pair);
-		}
-
 	}
 	
 	inputFile.close();
@@ -41,7 +35,7 @@ const Input Solution::getInput() const {
 }
 
 
-const RockPaperScissorsPlay Solution::decryptPlay(char encryptedPlay) const {
+const RockPaperScissorsPlay Solution::Part1::decryptPlay(char encryptedPlay) {
 	switch(encryptedPlay) {
 		case 'A':
 		case 'X':
@@ -57,19 +51,20 @@ const RockPaperScissorsPlay Solution::decryptPlay(char encryptedPlay) const {
 	return RockPaperScissorsPlay::Invalid;
 }
 
-
 int Solution::part1(const Input input) const {
 	int accumulator = 0;
 
-	for(const auto& [opponentPlay, yourPlay] : input) {
-		accumulator += calculateScore(opponentPlay, yourPlay);
+	for(const auto& plays : input) {
+		const auto opponentPlay = Part1::decryptPlay(plays.first);
+		const auto yourPlay = Part1::decryptPlay(plays.second);
+
+		accumulator += Part1::calculateScore(opponentPlay, yourPlay);
 	}
 
 	return accumulator;
 }
 
-
-int Solution::calculateScore(RockPaperScissorsPlay opponentPlay, RockPaperScissorsPlay yourPlay) const {
+int Solution::Part1::calculateScore(RockPaperScissorsPlay opponentPlay, RockPaperScissorsPlay yourPlay) {
 	int yourPlayScore{ 0 };
 	switch(yourPlay) {
 		case RockPaperScissorsPlay::Rock:
@@ -115,7 +110,125 @@ int Solution::calculateScore(RockPaperScissorsPlay opponentPlay, RockPaperScisso
 }
 
 
+
+const std::pair<const RockPaperScissorsPlay, const RoundResult> Solution::Part2::decryptPlays(std::pair<const char, const char> plays) {
+	RockPaperScissorsPlay opponentPlay;
+	switch(plays.first) {
+		case 'A':
+			opponentPlay = RockPaperScissorsPlay::Rock;
+			break;
+		case 'B':
+			opponentPlay = RockPaperScissorsPlay::Paper;
+			break;
+		case 'C':
+			opponentPlay = RockPaperScissorsPlay::Scissors;
+			break;
+		default:
+			break;
+	}
+
+	RoundResult desiredResult;
+	switch(plays.second) {
+		case 'X':
+			desiredResult = RoundResult::Lost;
+			break;
+		case 'Y':
+			desiredResult = RoundResult::Draw;
+			break;
+		case 'Z':
+			desiredResult = RoundResult::Won;
+			break;
+		default:
+			break;
+	}
+
+	return { opponentPlay, desiredResult };
+}
+
 int Solution::part2(const Input input) const {
-	return -1;
+	int accumulator = 0;
+
+	for(const auto& plays : input) {
+		const auto [opponentPlay, desiredResult] = Part2::decryptPlays(plays);
+		accumulator += Part2::calculateScore(opponentPlay, desiredResult);
+	}
+
+	return accumulator;
+}
+
+int Solution::Part2::calculateScore(RockPaperScissorsPlay opponentPlay, RoundResult desiredResult) {
+	const RockPaperScissorsPlay yourPlay = getPlayToAchieveDesiredResult(opponentPlay, desiredResult);
+
+	int yourPlayScore{ 0 };
+	switch(yourPlay) {
+		case RockPaperScissorsPlay::Rock:
+
+			yourPlayScore = 1;
+			break;
+		case RockPaperScissorsPlay::Paper:
+			yourPlayScore = 2;
+			break;
+		case RockPaperScissorsPlay::Scissors:
+			yourPlayScore = 3;
+			break;
+		default:
+			break;
+	}
+
+	int roundResultScore{ 0 };
+	switch(desiredResult) {
+		case RoundResult::Won:
+			roundResultScore = 6;
+			break;
+		case RoundResult::Draw:
+			roundResultScore = 3;
+			break;
+		case RoundResult::Lost:
+			roundResultScore = 0;
+			break;
+	}
+
+	return yourPlayScore + roundResultScore;
+}
+
+const RockPaperScissorsPlay Solution::Part2::getPlayToAchieveDesiredResult(const RockPaperScissorsPlay opponentPlay, const RoundResult desiredResult) {
+	switch(desiredResult) {
+		case RoundResult::Won:
+			return getPlayToWinAgainst(opponentPlay);
+		case RoundResult::Draw:
+			return getPlayToDrawAgainst(opponentPlay);
+		case RoundResult::Lost:
+			return getPlayToLoseAgainst(opponentPlay);
+	}
+}
+
+const RockPaperScissorsPlay Solution::Part2::getPlayToWinAgainst(const RockPaperScissorsPlay opponentPlay) {
+	switch(opponentPlay) {
+		case RockPaperScissorsPlay::Rock:
+			return RockPaperScissorsPlay::Paper;
+		case RockPaperScissorsPlay::Paper:
+			return RockPaperScissorsPlay::Scissors;
+		case RockPaperScissorsPlay::Scissors:
+			return RockPaperScissorsPlay::Rock;
+		default:
+			return RockPaperScissorsPlay::Invalid;
+	}
+}
+
+const RockPaperScissorsPlay Solution::Part2::getPlayToDrawAgainst(const RockPaperScissorsPlay opponentPlay) {
+	return opponentPlay;
+}
+
+const RockPaperScissorsPlay Solution::Part2::getPlayToLoseAgainst(const RockPaperScissorsPlay opponentPlay) {
+	switch(opponentPlay) {
+		case RockPaperScissorsPlay::Rock:
+			return RockPaperScissorsPlay::Scissors;
+		case RockPaperScissorsPlay::Paper:
+			return RockPaperScissorsPlay::Rock;
+		case RockPaperScissorsPlay::Scissors:
+			return RockPaperScissorsPlay::Paper;
+		default:
+			return RockPaperScissorsPlay::Invalid;
+	}
 }
 	

@@ -15,7 +15,7 @@ namespace Year2022::Day02 {
 		Scissors
 	};
 
-	using Input = std::vector<std::pair<const RockPaperScissorsPlay, const RockPaperScissorsPlay>>;
+	using Input = std::vector<std::pair<const char, const char>>;
 
 	enum class RoundResult {
 		Won,
@@ -31,10 +31,22 @@ namespace Year2022::Day02 {
 		const Input getInput() const override;
 		int part1(const Input input) const override;
 		int part2(const Input input) const override;
-	
-	private:
-		const RockPaperScissorsPlay decryptPlay(char encryptedPlay) const;
-		int calculateScore(RockPaperScissorsPlay opponentPlay, RockPaperScissorsPlay yourPlay) const;
+
+		class Part1 {
+		public:
+			static int calculateScore(RockPaperScissorsPlay opponentPlay, RockPaperScissorsPlay yourPlay);
+			static const RockPaperScissorsPlay decryptPlay(char encryptedPlay);
+		};
+
+		class Part2 {
+		public:
+			static int calculateScore(RockPaperScissorsPlay opponentPlay, RoundResult desiredResult);
+			static const std::pair<const RockPaperScissorsPlay, const RoundResult> decryptPlays(std::pair<const char, const char> plays);
+			static const RockPaperScissorsPlay getPlayToAchieveDesiredResult(const RockPaperScissorsPlay opponentPlay, const RoundResult desiredResult);
+			static const RockPaperScissorsPlay getPlayToWinAgainst(const RockPaperScissorsPlay opponentPlay);
+			static const RockPaperScissorsPlay getPlayToDrawAgainst(const RockPaperScissorsPlay opponentPlay);
+			static const RockPaperScissorsPlay getPlayToLoseAgainst(const RockPaperScissorsPlay opponentPlay);
+		};
 	};
 
 }
