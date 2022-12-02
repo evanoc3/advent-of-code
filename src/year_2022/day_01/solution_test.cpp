@@ -7,7 +7,20 @@ using namespace Year2022::Day01;
 
 TEST_CASE("Year2022::Day01::Solution", "[Year2022][Day01]")
 {
-	const auto solution = Solution();
+	const auto solution = std::make_unique<Solution>();
+
+	SECTION("getInput")
+	{
+		const auto actualInput = solution->getInput();
+
+		const std::vector<int> expectedInputFront = { 3120, 4127, 1830, 1283, 5021, 3569, 3164, 2396, 4367, 2821, 6118, 4450, 1300, 3648, 1933 };
+
+		REQUIRE( actualInput.front() == expectedInputFront );
+
+		const std::vector<int> expectedInputBack = { 3531, 4133, 1549, 9146, 8227, 5186, 5159, 1952 };
+
+		REQUIRE( actualInput.back() == expectedInputBack );
+	}
 
 	SECTION("part1")
 	{
@@ -21,7 +34,7 @@ TEST_CASE("Year2022::Day01::Solution", "[Year2022][Day01]")
 				{ 10000 }
 			};
 
-			const auto actualResult = solution.part1(sampleInput);
+			const auto actualResult = solution->part1(sampleInput);
 
 			const auto expectedResult = 24000;
 
@@ -30,8 +43,8 @@ TEST_CASE("Year2022::Day01::Solution", "[Year2022][Day01]")
 
 		GIVEN("Real input")
 		{
-			const auto input = solution.getInput();
-			const auto actualResult = solution.part1(input);
+			const auto input = solution->getInput();
+			const auto actualResult = solution->part1(input);
 
 			const auto expectedResult = 68292;
 
@@ -51,7 +64,7 @@ TEST_CASE("Year2022::Day01::Solution", "[Year2022][Day01]")
 				{ 10000 }
 			};
 
-			const auto actualResult = solution.part2(sampleInput);
+			const auto actualResult = solution->part2(sampleInput);
 
 			const auto expectedResult = 45000;
 
@@ -60,8 +73,8 @@ TEST_CASE("Year2022::Day01::Solution", "[Year2022][Day01]")
 
 		GIVEN("Real input")
 		{
-			const auto input = solution.getInput();
-			const auto actualResult = solution.part2(input);
+			const auto input = solution->getInput();
+			const auto actualResult = solution->part2(input);
 
 			const auto expectedResult = 203203;
 

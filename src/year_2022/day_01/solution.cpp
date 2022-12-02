@@ -7,11 +7,6 @@
 using namespace Year2022::Day01;
 
 
-Solution::Solution()
-	: input( getInput() ) {
-}
-
-
 Input Solution::getInput() const {
 	auto inputFilePath = std::filesystem::path(__FILE__);
 	inputFilePath.replace_filename("input.txt");

@@ -1,8 +1,5 @@
 #pragma once
 
-#include <string>
-
-
 template<typename Input_t, typename Part1_t, typename Part2_t>
 class BaseSolution {
 public:

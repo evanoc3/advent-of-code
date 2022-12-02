@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.25)
 
 project(AdventOfCode VERSION 0.1)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # Set strict compiler options
@@ -19,6 +19,7 @@ add_library(
 	lib-advent-of-code
 
 	src/year_2022/day_01/solution.cpp
+	src/year_2022/day_02/solution.cpp
 )
 
 target_include_directories(lib-advent-of-code PUBLIC src)
@@ -40,6 +41,7 @@ add_executable(
 
 	src/test_runner.cpp
 	src/year_2022/day_01/solution_test.cpp
+	src/year_2022/day_02/solution_test.cpp
 )
 
 find_package(Catch2 REQUIRED)

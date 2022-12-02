@@ -9,9 +9,9 @@ namespace Year2022::Day01 {
 	using Input = std::vector<std::vector<int>>;
 
 
-	class Solution : public BaseSolution<Input, int64_t, int64_t> {
+	class Solution final : public BaseSolution<Input, int64_t, int64_t> {
 	public:
-		Solution();
+		~Solution() = default;
 
 		Input getInput() const override;
 		int64_t part1(const Input input) const override;
@@ -19,8 +19,6 @@ namespace Year2022::Day01 {
 	
 	private:
 		int64_t sumOf(std::vector<int> vec) const;
-
-		const Input input;
 	};
 	
 }
