@@ -7,7 +7,7 @@
 using namespace Year2022::Day01;
 
 
-Input Solution::getInput() const {
+const Input Solution::getInput() const {
 	auto inputFilePath = std::filesystem::path(__FILE__);
 	inputFilePath.replace_filename("input.txt");
 
@@ -41,7 +41,7 @@ Input Solution::getInput() const {
 }
 
 
-int64_t Solution::part1(const Input input) const {
+const int64_t Solution::part1(const Input input) const {
 	int64_t highest = 0;
 
 	for(const auto& elf : input) {
@@ -55,7 +55,7 @@ int64_t Solution::part1(const Input input) const {
 }
 
 
-int64_t Solution::sumOf(std::vector<int> vec) const {
+const int64_t Solution::sumOf(const std::vector<int> vec) const {
 	int accumulator = 0;
 	for(const auto& num : vec) {
 		accumulator += num;
@@ -64,7 +64,7 @@ int64_t Solution::sumOf(std::vector<int> vec) const {
 }
 
 
-int64_t Solution::part2(const Input input) const {
+const int64_t Solution::part2(const Input input) const {
 	int64_t highest = 0;
 	int64_t secondHighest = 0;
 	int64_t thirdHighest = 0;

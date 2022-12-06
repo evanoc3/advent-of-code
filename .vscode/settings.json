@@ -6,6 +6,13 @@
     "*.mdx": "markdown",
     "string": "cpp",
     "iosfwd": "cpp",
-    "vector": "cpp"
+    "vector": "cpp",
+    "iostream": "cpp",
+    "filesystem": "cpp",
+    "__split_buffer": "cpp",
+    "array": "cpp",
+    "deque": "cpp",
+    "list": "cpp",
+    "string_view": "cpp"
   }
 }

@@ -20,6 +20,7 @@ add_library(
 
 	src/year_2022/day_01/solution.cpp
 	src/year_2022/day_02/solution.cpp
+	src/year_2022/day_03/solution.cpp
 )
 
 target_include_directories(lib-advent-of-code PUBLIC src)
@@ -42,6 +43,7 @@ add_executable(
 	src/test_runner.cpp
 	src/year_2022/day_01/solution_test.cpp
 	src/year_2022/day_02/solution_test.cpp
+	src/year_2022/day_03/solution_test.cpp
 )
 
 find_package(Catch2 REQUIRED)

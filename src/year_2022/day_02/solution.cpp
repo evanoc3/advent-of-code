@@ -51,7 +51,7 @@ const RockPaperScissorsPlay Solution::Part1::decryptPlay(char encryptedPlay) {
 	return RockPaperScissorsPlay::Invalid;
 }
 
-int Solution::part1(const Input input) const {
+const int Solution::part1(const Input input) const {
 	int accumulator = 0;
 
 	for(const auto& plays : input) {
@@ -64,7 +64,7 @@ int Solution::part1(const Input input) const {
 	return accumulator;
 }
 
-int Solution::Part1::calculateScore(RockPaperScissorsPlay opponentPlay, RockPaperScissorsPlay yourPlay) {
+const int Solution::Part1::calculateScore(const RockPaperScissorsPlay opponentPlay, const RockPaperScissorsPlay yourPlay) {
 	int yourPlayScore{ 0 };
 	switch(yourPlay) {
 		case RockPaperScissorsPlay::Rock:
@@ -110,7 +110,6 @@ int Solution::Part1::calculateScore(RockPaperScissorsPlay opponentPlay, RockPape
 }
 
 
-
 const std::pair<const RockPaperScissorsPlay, const RoundResult> Solution::Part2::decryptPlays(std::pair<const char, const char> plays) {
 	RockPaperScissorsPlay opponentPlay;
 	switch(plays.first) {
@@ -145,7 +144,7 @@ const std::pair<const RockPaperScissorsPlay, const RoundResult> Solution::Part2:
 	return { opponentPlay, desiredResult };
 }
 
-int Solution::part2(const Input input) const {
+const int Solution::part2(const Input input) const {
 	int accumulator = 0;
 
 	for(const auto& plays : input) {
