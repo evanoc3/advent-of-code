@@ -1,6 +1,5 @@
 #include <filesystem>
 #include <fstream>
-#include <utility>
 #include <algorithm>
 #include "year_2022/day_03/solution.hpp"
 
