@@ -1,8 +1,7 @@
-// #include <filesystem>
-// #include <vector>
-// #include <iostream>
 #include <filesystem>
 #include <fstream>
+#include <utility>
+#include <algorithm>
 #include "year_2022/day_03/solution.hpp"
 
 
@@ -47,7 +46,7 @@ bool Rucksack::operator==(const Rucksack& other) const {
 const int Solution::part1(const Input input) const {
 	int accumulator = 0;
 	for(const Rucksack& rucksack : input) {
-		const auto commonLetter = getCommonLetters(rucksack);
+		const auto commonLetter = getCommonLetter(rucksack);
 		const auto commonLetterPriority = getLetterPriority(commonLetter);
 		accumulator += commonLetterPriority;
 	}
@@ -56,7 +55,7 @@ const int Solution::part1(const Input input) const {
 }
 
 
-const char Solution::getCommonLetters(const Rucksack rucksack) const {
+const char Solution::getCommonLetter(const Rucksack rucksack) const {
 	for(const char& c1 : rucksack.firstCompartment) {
 		for(const char& c2 : rucksack.secondCompartment) {
 			if(c1 == c2) {
@@ -79,4 +78,49 @@ const int Solution::getLetterPriority(const char c) const {
 	}
 
 	return -1;
+}
+
+
+const int Solution::part2(const Input input) const {
+	int accumulator = 0;
+
+	for(int i = 0; i < input.size(); i += 3) {
+		const auto rucksackA = input.at(i);
+		const auto rucksackB = input.at(i + 1);
+		const auto rucksackC = input.at(i + 2);
+
+		const auto commonLetter = getCommonLetter(rucksackA, rucksackB, rucksackC);
+		accumulator += getLetterPriority(commonLetter);
+	}
+
+	return accumulator;
+}
+
+
+const std::vector<char> Rucksack::contents() const {
+	std::vector<char> combined( firstCompartment.size() + secondCompartment.size() );
+	std::merge(firstCompartment.begin(), firstCompartment.end(), secondCompartment.begin(), secondCompartment.end(), combined.begin());
+	return combined;
+}
+
+
+const bool Rucksack::contains(const char c) const {
+	if(std::find(firstCompartment.begin(), firstCompartment.end(), c) != firstCompartment.end()) {
+		return true;
+	}
+	if(std::find(secondCompartment.begin(), secondCompartment.end(), c) != secondCompartment.end()) {
+		return true;
+	}
+
+	return false;
+}
+
+
+const char Solution::getCommonLetter(const Rucksack rucksackA, const Rucksack rucksackB, const Rucksack rucksackC) const {
+	for(const char& c : rucksackA.contents()) {
+		if(rucksackB.contains(c) && rucksackC.contains(c)) {
+			return c;
+		}
+	}
+	return '1';
 }
