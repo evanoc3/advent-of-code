@@ -53,6 +53,29 @@ const int Solution::part1(const Input input) const {
 }
 
 
-const bool Solution::rangesOverlap(range range1, range range2) const {
+const bool Solution::rangesOverlap(const range range1, const range range2) const {
 	return (range1.first <= range2.first && range1.second >= range2.second) || (range2.first <= range1.first && range2.second >= range1.second);
+}
+
+
+const int Solution::part2(const Input input) const {
+	int accumulator = 0;
+
+	for(const auto& [ range1, range2 ] : input) {
+		if(rangesIntersect(range1, range2)) {
+			accumulator++;
+		}
+	}
+
+	return accumulator;
+}
+
+
+const bool Solution::rangesIntersect(const range range1, const range range2) const {
+	// does range2 intersect with range1
+	if(range1.second < range2.first || range1.first > range2.second) {
+		return false;
+	}
+
+	return true;
 }

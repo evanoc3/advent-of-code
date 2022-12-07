@@ -38,7 +38,7 @@ int main() {
 		const auto solution = std::make_unique<Year2022::Day04::Solution>();
 		const auto input = solution->getInput();
 		std::cout << "Year2022::Day04::Solution->part1(): " << solution->part1(input) << std::endl;
-		// std::cout << "Year2022::Day04::Solution->part2(): " << solution->part2(input) << std::endl;
+		std::cout << "Year2022::Day04::Solution->part2(): " << solution->part2(input) << std::endl;
 		std::cout << std::endl;
 	}
 
