@@ -80,24 +80,15 @@ bool MoveInstruction::operator==(const MoveInstruction& rhs) const {
 const std::string Solution::part1(const Input input) const {
 	auto curState = input.initialState;
 
-	// std::cout << "Initial state:" << std::endl << stateToString(curState) << std::endl;
-
 	for(const auto& moveInstruction : input.moveInstructions) {
-
-		// std::cout << std::endl << moveInstructionToString(moveInstruction) << std::endl;
-
-		performMove(curState, moveInstruction);
-		// break;
+		Part1::performMove(curState, moveInstruction);
 	}
-
-
-	// std::cout << std::endl << stateToString(curState) << std::endl;
 
 	return getTopOfStateColumns(curState);
 }
 
 
-void Solution::performMove(State& state, const MoveInstruction instruction) const {
+void Solution::Part1::performMove(State& state, const MoveInstruction instruction) {
 	// take the items off the source column and store them in a buffer
 	std::vector<char> mvBuf;
 	for(auto i = 0; i < instruction.amount; i++) {
@@ -152,4 +143,30 @@ const std::string Solution::getTopOfStateColumns(const State& state) const {
 	}
 
 	return tops;
+}
+
+
+const std::string Solution::part2(const Input input) const {
+	auto curState = input.initialState;
+	
+	for(const auto& moveInstruction : input.moveInstructions) {
+		Part2::performMove(curState, moveInstruction);
+	}
+
+	return getTopOfStateColumns(curState);
+}
+
+
+void Solution::Part2::performMove(State& state, const MoveInstruction instruction) {
+	// take the items off the source column and store them in a buffer
+	std::vector<char> mvBuf;
+	for(auto i = 0; i < instruction.amount; i++) {
+		mvBuf.push_back( state[instruction.srcColumn - 1].front() );
+		state[instruction.srcColumn - 1].pop_front();
+	}
+
+	// iterating over the buffer in reverse, add the items onto the top of the destination column
+	for(auto it = mvBuf.rbegin(); it != mvBuf.rend(); ++it) {
+		state[instruction.destColumn - 1].push_front(*it);
+	}
 }

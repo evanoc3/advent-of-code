@@ -24,15 +24,24 @@ namespace Year2022::Day05 {
 	};
 
 
-	class Solution final : public IGetInput<Input>
-											 , public IPart1<Input, std::string> {
+	class Solution final : public ISolution<Input, std::string, std::string> {
 	public:
 		~Solution() = default;
 
 		const Input getInput() const override;
 		const std::string part1(const Input input) const override;
+		const std::string part2(const Input input) const override;
+		
+		class Part1 {
+		public:
+			static void performMove(State& prevState, const MoveInstruction instruction);
+		};
 
-		void performMove(State& prevState, const MoveInstruction instruction) const;
+		class Part2 {
+		public:
+			static void performMove(State& prevState, const MoveInstruction instruction);
+		};
+
 		const std::string getTopOfStateColumns(const State& state) const;
 		
 	private:

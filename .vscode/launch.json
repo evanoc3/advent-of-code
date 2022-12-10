@@ -5,7 +5,7 @@
 			"name": "Debug target",
 			"type": "cppdbg",
 			"request": "launch",
-			"args": [ "[Day05]" ],
+			"args": [ ],
 			"program": "${command:cmake.getLaunchTargetPath}",
 			"cwd": "${workspaceFolder}",
 			"osx": {
