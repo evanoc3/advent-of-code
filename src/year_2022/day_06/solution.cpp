@@ -58,3 +58,15 @@ const bool Solution::substringIsUnique(const std::string substr) const {
 
 	return true;
 } 
+
+
+const int Solution::part2(const Input input) const {
+		for(int i = 13; i < input.size(); i++) {
+		auto substr = input.substr(i - 13, 14);
+
+		if(substringIsUnique(substr)) {
+			return i + 1;
+		}
+	}
+	return -1;
+}

@@ -44,9 +44,7 @@ TEST_CASE_METHOD(SolutionTests, "Year2022::Day06::Solution::part1", "[Year2022][
 	
 	GIVEN("Real input")
 	{
-		// do some assertions on the output of part1 here
-		// const auto expectedOutput = /* insert the expected output here */;
-		// REQUIRE( solution->part1(solution->getInput()) == expectedOutput );
+		REQUIRE( solution->part1(solution->getInput()) == 1598 );
 	}
 }
 
@@ -55,13 +53,11 @@ TEST_CASE_METHOD(SolutionTests, "Year2022::Day06::Solution::part2", "[Year2022][
 {
 	GIVEN("Sample input")
 	{
-		const Input sampleInput = {
-			/* insert the sample input from the problem here */
-		};
-		
-		// do some assertions on the output of part2 here
-		// const auto expectedOutput = /* insert the expected output here */;
-		// REQUIRE( solution->part1(sampleInput) == expectedOutput );
+		REQUIRE( solution->part2("mjqjpqmgbljsphdztnvjfqwrcgsmlb") == 19 );
+		REQUIRE( solution->part2("bvwbjplbgvbhsrlpgdmjqwftvncz") == 23 );
+		REQUIRE( solution->part2("nppdvjthqldpwncqszvftbrmjlhg") == 23 );
+		REQUIRE( solution->part2("nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg") == 29 );
+		REQUIRE( solution->part2("zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw") == 26 );
 	}
 	
 	GIVEN("Real input")
