@@ -10,13 +10,14 @@ namespace Year2022::Day04 {
 	using Input = std::vector<pair>;
 
 
-	class Solution final : public ISolution<Input, int, int> {
+	class Solution final : public IGetInput<const Input>
+											 , public ISolutionWithInput<const Input&, const int, const int> {
 	public:
 		~Solution() = default;
 
 		const Input getInput() const override;
-		const int part1(const Input input) const override;
-		const int part2(const Input input) const override;
+		const int part1(const Input& input) const override;
+		const int part2(const Input& input) const override;
 	
 	private:
 		const bool rangesOverlap(const range range1, const range range2) const;

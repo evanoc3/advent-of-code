@@ -42,7 +42,7 @@ bool Rucksack::operator==(const Rucksack& other) const {
 }
 
 
-const int Solution::part1(const Input input) const {
+const int Solution::part1(const Input& input) const {
 	int accumulator = 0;
 	for(const Rucksack& rucksack : input) {
 		const auto commonLetter = getCommonLetter(rucksack);
@@ -80,7 +80,7 @@ const int Solution::getLetterPriority(const char c) const {
 }
 
 
-const int Solution::part2(const Input input) const {
+const int Solution::part2(const Input& input) const {
 	int accumulator = 0;
 
 	for(int i = 0; i < input.size(); i += 3) {

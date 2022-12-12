@@ -77,7 +77,7 @@ bool MoveInstruction::operator==(const MoveInstruction& rhs) const {
 }
 
 
-const std::string Solution::part1(const Input input) const {
+const std::string Solution::part1(const Input& input) const {
 	auto curState = input.initialState;
 
 	for(const auto& moveInstruction : input.moveInstructions) {
@@ -146,7 +146,7 @@ const std::string Solution::getTopOfStateColumns(const State& state) const {
 }
 
 
-const std::string Solution::part2(const Input input) const {
+const std::string Solution::part2(const Input& input) const {
 	auto curState = input.initialState;
 	
 	for(const auto& moveInstruction : input.moveInstructions) {

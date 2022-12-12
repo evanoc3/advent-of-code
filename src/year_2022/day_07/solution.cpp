@@ -103,7 +103,7 @@ Dir* Dir::getSubDir(const std::string searchDirName) const {
 }
 
 
-const int Solution::part1(const Input& input) const {
+const int Solution::part1() const {
 	int accumulator = 0;
 
 	const auto dirsOver100Kb = getDirsUnder100Kb(input.get());
@@ -143,7 +143,7 @@ const std::vector<const Dir*> Solution::getDirsUnder100Kb(const Dir* dir) const 
 }
 
 
-const int Solution::part2(const Input& input) const {
+const int Solution::part2() const {
 	const auto unusedSpace = 70000000 - input->getSize();
 	const auto spaceNeeded = 30000000 - unusedSpace;
 

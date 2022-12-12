@@ -81,14 +81,14 @@ TEST_CASE_METHOD(SolutionTests, "Year2022::Day07::Solution::part1", "[Year2022][
 	{
 		injectSampleInput();
 
-		REQUIRE( solution->part1(solution->input) == 95437 );
+		REQUIRE( solution->part1() == 95437 );
 	}
 	
 	GIVEN("Real input")
 	{
 		solution->getInput();
 
-		REQUIRE( solution->part1(solution->input) == 2031851 );
+		REQUIRE( solution->part1() == 2031851 );
 	}
 }
 
@@ -99,13 +99,13 @@ TEST_CASE_METHOD(SolutionTests, "Year2022::Day07::Solution::part2", "[Year2022][
 	{
 		injectSampleInput();
 
-		REQUIRE( solution->part2(solution->input) == 24933642 );
+		REQUIRE( solution->part2() == 24933642 );
 	}
 	
 	GIVEN("Real input")
 	{
 		solution->getInput();
 		
-		REQUIRE( solution->part2(solution->input) == 2568781 );
+		REQUIRE( solution->part2() == 2568781 );
 	}
 }

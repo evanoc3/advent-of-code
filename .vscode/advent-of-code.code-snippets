@@ -1,26 +1,27 @@
 {
 	"Solution Header": {
 		"scope": "cpp",
-		"prefix": "header",
+		"prefix": "solution-header",
 		"body": [
 			"#pragma once",
 			"",
 			"#include \"utils/ISolution.hpp\"",
 			"",
 			"",
-			"namespace Year2022::Day${1:Num} {",
+			"namespace Year2022::Day${1:DayNum} {",
 			"\t",
-			"\tusing Input = ${2:InType};",
+			"\tusing Input = ${2:Input_t};",
 			"\t",
 			"\t",
-			"\tclass Solution final : public IGetInput<Input>",
-			"\t\t\t\t\t\t\t\t\t\t\t , public IPart1<Input, ${3:OutType}> {",
+			"\tclass Solution final : public IGetInput<const Input>",
+			"\t\t\t\t\t\t\t\t\t\t\t //, public ISolutionWithInput<const Input&, ${3:Part1_t}, Part2_t> {",
+			"\t\t\t\t\t\t\t\t\t\t\t , public IPart1WithInput<const Input&, $3> {",
 			"\tpublic:",
 			"\t\t~Solution() = default;",
 			"\t\t",
 			"\t\tconst Input getInput() const override;",
-			"\t\tconst $3 part1(const Input input) const override;",
-			"\t\t//const auto part2(const Input input) const override;",
+			"\t\tconst $3 part1(const Input& input) const override;",
+			"\t\t//const auto part2(const Input& input) const override;",
 			"\t\t",
 			"\t};",
 			"\t",
@@ -32,7 +33,7 @@
 
 	"Solution Implementation": {
 		"scope": "cpp",
-		"prefix": "implementation",
+		"prefix": "solution-implementation",
 		"body": [
 			"#include <filesystem>",
 			"#include <fstream>",
@@ -65,11 +66,11 @@
 			"}",
 			"",
 			"",
-			"const ${2:OutType} Solution::part1(const Input& input) const {",
+			"const ${2:Part1_t} Solution::part1(const Input& input) const {",
 			"}",
 			"",
 			"",
-			"//const auto Solution::part2(const Input& input) const {",
+			"//const ${3:Part2_t} Solution::part2(const Input& input) const {",
 			"//}",
 			""
 		],
@@ -78,7 +79,7 @@
 
 	"Solution Test Case": {
 		"scope": "cpp",
-		"prefix": "testcase",
+		"prefix": "solution-testcase",
 		"body": [
 			"#include <catch.hpp>",
 			"#include \"solution.hpp\"",
@@ -158,14 +159,14 @@
 
 	"Print Solution Output": {
 		"scope": "cpp",
-		"prefix": "printsolution",
+		"prefix": "solution-main",
 		"body": [
 			"// year 2022 day ${1:DayNum}",
 			"{",
 			"\tconst auto solution = std::make_unique<Year2022::Day$1::Solution>();",
 			"\tconst auto input = solution->getInput();",
 			"\tstd::cout << \"Year2022::Day$1::Solution->part1(): \" << solution->part1(input) << std::endl;",
-			"\t// std::cout << \"Year2022::Day$1::Solution->part2(): \" << solution->part2(input) << std::endl;",
+			"\t//std::cout << \"Year2022::Day$1::Solution->part2(): \" << solution->part2(input) << std::endl;",
 			"\tstd::cout << std::endl;",
 			"}"
 		]

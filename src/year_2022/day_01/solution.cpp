@@ -41,7 +41,7 @@ const Input Solution::getInput() const {
 }
 
 
-const int64_t Solution::part1(const Input input) const {
+const int64_t Solution::part1(const Input& input) const {
 	int64_t highest = 0;
 
 	for(const auto& elf : input) {
@@ -64,7 +64,7 @@ const int64_t Solution::sumOf(const std::vector<int> vec) const {
 }
 
 
-const int64_t Solution::part2(const Input input) const {
+const int64_t Solution::part2(const Input& input) const {
 	int64_t highest = 0;
 	int64_t secondHighest = 0;
 	int64_t thirdHighest = 0;

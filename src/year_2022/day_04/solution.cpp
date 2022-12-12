@@ -40,7 +40,7 @@ const Input Solution::getInput() const {
 }
 
 
-const int Solution::part1(const Input input) const {
+const int Solution::part1(const Input& input) const {
 	int accumulator = 0;
 
 	for(const auto& [ range1, range2 ] : input) {
@@ -58,7 +58,7 @@ const bool Solution::rangesOverlap(const range range1, const range range2) const
 }
 
 
-const int Solution::part2(const Input input) const {
+const int Solution::part2(const Input& input) const {
 	int accumulator = 0;
 
 	for(const auto& [ range1, range2 ] : input) {

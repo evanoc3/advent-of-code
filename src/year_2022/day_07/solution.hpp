@@ -40,13 +40,15 @@ namespace Year2022::Day07 {
 	using Input = DirPtr;
 	
 	
-	class Solution final {
+	class Solution final : public IGetInputMutable<void> 
+											 , public IPart1<const int>
+											 , public IPart2<const int> {
 	public:
 		~Solution() = default;
 		
 		void getInput();
-		const int part1(const Input& input) const;
-		const int part2(const Input& input) const;
+		const int part1() const;
+		const int part2() const;
 
 		const std::vector<const Dir*> getDirsUnder100Kb(const Dir* rootDir) const;
 		const std::vector<const Dir*> getDirsOverSize(const Dir* dir, const int minSize) const;

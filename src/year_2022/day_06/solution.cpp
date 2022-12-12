@@ -30,7 +30,7 @@ const Input Solution::getInput() const {
 }
 
 
-const int Solution::part1(const Input input) const {
+const int Solution::part1(const Input& input) const {
 	for(int i = 3; i < input.size(); i++) {
 		auto substr = input.substr(i - 3, 4);
 
@@ -60,7 +60,7 @@ const bool Solution::substringIsUnique(const std::string substr) const {
 } 
 
 
-const int Solution::part2(const Input input) const {
+const int Solution::part2(const Input& input) const {
 		for(int i = 13; i < input.size(); i++) {
 		auto substr = input.substr(i - 13, 14);
 
