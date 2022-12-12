@@ -65,11 +65,11 @@
 			"}",
 			"",
 			"",
-			"const ${2:OutType} Solution::part1(const Input input) const {",
+			"const ${2:OutType} Solution::part1(const Input& input) const {",
 			"}",
 			"",
 			"",
-			"//const auto Solution::part2(const Input input) const {",
+			"//const auto Solution::part2(const Input& input) const {",
 			"//}",
 			""
 		],
