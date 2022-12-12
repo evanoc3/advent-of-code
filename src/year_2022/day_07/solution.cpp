@@ -1,6 +1,7 @@
 #include <filesystem>
 #include <fstream>
 #include <regex>
+#include <algorithm>
 #include "solution.hpp"
 
 
@@ -142,5 +143,51 @@ const std::vector<const Dir*> Solution::getDirsUnder100Kb(const Dir* dir) const 
 }
 
 
-//const auto Solution::part2(const Input input) const {
-//}
+const int Solution::part2(const Input& input) const {
+	const auto unusedSpace = 70000000 - input->getSize();
+	const auto spaceNeeded = 30000000 - unusedSpace;
+
+	// remove nullptrs from the vector of arrays
+	auto dirs = getDirsOverSize(input.get(), spaceNeeded);
+	dirs.erase(std::remove_if(dirs.begin(), dirs.end(), [](const auto& dir) {
+		return dir == nullptr;
+	}));
+	// sort it by dir size
+	std::sort(dirs.begin(), dirs.end(), Solution::compareDirSizes);
+
+	// now the smallest directory of sufficient size will be at the start of the vector
+	return dirs.front()->getSize();
+}
+
+
+const std::vector<const Dir*> Solution::getDirsOverSize(const Dir* dir, const int minSize) const {
+	if(dir == nullptr) {
+		return {};
+	}
+
+	const auto dirIsOverSize = dir->getSize() >= minSize;
+
+	std::vector<const Dir*> allDirsOverSize( dirIsOverSize ? 1 : 0 );
+
+	if(dirIsOverSize) {
+		allDirsOverSize.emplace_back(dir);
+	}
+
+	for(const auto& subDir : dir->subDirs) {
+		const auto subDirsOverSize = getDirsOverSize(subDir.get(), minSize);
+
+		allDirsOverSize.reserve( allDirsOverSize.size() + subDirsOverSize.size() );
+		for(const auto& subDir : subDirsOverSize) {
+			if(subDir != nullptr) {
+				allDirsOverSize.emplace_back(subDir);
+			}
+		}
+	}
+
+	return allDirsOverSize;
+}
+
+
+bool Solution::compareDirSizes(const Dir*& dir1, const Dir*& dir2) {
+	return dir1->getSize() <= dir2->getSize();
+}

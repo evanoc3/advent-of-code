@@ -46,8 +46,12 @@ namespace Year2022::Day07 {
 		
 		void getInput();
 		const int part1(const Input& input) const;
+		const int part2(const Input& input) const;
+
 		const std::vector<const Dir*> getDirsUnder100Kb(const Dir* rootDir) const;
-		//const auto part2(const Input input) const override;
+		const std::vector<const Dir*> getDirsOverSize(const Dir* dir, const int minSize) const;
+
+		static bool compareDirSizes(const Dir*& dir1, const Dir*& dir2);
 
 		Input input{ nullptr };
 	};

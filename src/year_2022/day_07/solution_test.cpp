@@ -97,18 +97,15 @@ TEST_CASE_METHOD(SolutionTests, "Year2022::Day07::Solution::part2", "[Year2022][
 {
 	GIVEN("Sample input")
 	{
-		// injectSampleInput();
-		
-		// do some assertions on the output of part2 here
-		// const auto expectedOutput = /* insert the expected output here */;
-		// REQUIRE( solution->part1(sampleInput) == expectedOutput );
+		injectSampleInput();
+
+		REQUIRE( solution->part2(solution->input) == 24933642 );
 	}
 	
 	GIVEN("Real input")
 	{
-		// solution->getInput();
-		// do some assertions on the output of part2 here
-		// const auto expectedOutput = /* insert the expected output here */;
-		// REQUIRE( solution->part2(solution->getInput()) == expectedOutput );
+		solution->getInput();
+		
+		REQUIRE( solution->part2(solution->input) == 2568781 );
 	}
 }
