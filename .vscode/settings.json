@@ -79,5 +79,8 @@
     "variant": "cpp",
     "algorithm": "cpp"
   },
-  "editor.tabCompletion": "on"
+  "editor.tabCompletion": "on",
+  "git.ignoredRepositories": [
+    "${workspaceFolder}/vcpkg"
+],
 }

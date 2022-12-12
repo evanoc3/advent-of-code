@@ -13,7 +13,6 @@ else()
 endif()
 
 
-
 # Main library
 add_library(
 	lib-advent-of-code
