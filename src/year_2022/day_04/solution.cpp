@@ -1,30 +1,23 @@
-#include <filesystem>
-#include <fstream>
+#include <sstream>
 #include <regex>
-#include "year_2022/day_04/solution.hpp"
+#include "solution.hpp"
 
 
 using namespace Year2022::Day04;
 
 
-const Input Solution::getInput() const {
-	auto inputFilePath = std::filesystem::path(__FILE__);
-	inputFilePath.replace_filename("input.txt");
+Solution::Solution()
+	: mInputFilePath(std::filesystem::path(__FILE__).replace_filename("input.txt")) {
+}
 
-	std::ifstream inputFile;
-	inputFile.open(inputFilePath, std::ios::in);
 
+const Input Solution::parseInput(const std::string& rawInput) const {
+	std::stringstream inputStream(rawInput);
+	std::string line;
 	Input input;
-
-	if(!inputFile.is_open()) {
-		return input;
-	}
-
 	const std::regex inputRegex("(\\d+)-(\\d+),(\\d+)-(\\d+)");
 
-	std::string line;
-	while(getline(inputFile, line)) {
-
+	while(std::getline(inputStream, line)) {
 		std::smatch matches;
 		if(regex_search(line, matches, inputRegex)) {
 			const pair newPair = {
@@ -35,7 +28,6 @@ const Input Solution::getInput() const {
 		}
 	}
 	
-	inputFile.close();
 	return input;
 }
 
@@ -53,7 +45,7 @@ const int Solution::part1(const Input& input) const {
 }
 
 
-const bool Solution::rangesOverlap(const range range1, const range range2) const {
+const bool Solution::rangesOverlap(const range& range1, const range& range2) const {
 	return (range1.first <= range2.first && range1.second >= range2.second) || (range2.first <= range1.first && range2.second >= range1.second);
 }
 
@@ -71,7 +63,7 @@ const int Solution::part2(const Input& input) const {
 }
 
 
-const bool Solution::rangesIntersect(const range range1, const range range2) const {
+const bool Solution::rangesIntersect(const range& range1, const range& range2) const {
 	// does range2 intersect with range1
 	if(range1.second < range2.first || range1.first > range2.second) {
 		return false;

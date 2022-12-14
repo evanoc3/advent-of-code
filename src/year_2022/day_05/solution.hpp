@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-#include <string>
 #include <deque>
 #include "utils/ISolution.hpp"
 
@@ -24,15 +23,20 @@ namespace Year2022::Day05 {
 	};
 
 
-	class Solution final : public IGetInput<const Input>
+	class Solution final : public IParseInputConst<const Input>
 											 , public ISolutionWithInput<const Input&, const std::string, const std::string> {
 	public:
+		Solution();
 		~Solution() = default;
 
-		const Input getInput() const override;
+		// IParseInputConst
+		const Input parseInput(const std::string& rawInput) const override;
+
+		// ISolution
 		const std::string part1(const Input& input) const override;
 		const std::string part2(const Input& input) const override;
 		
+		// Public Methods
 		class Part1 {
 		public:
 			static void performMove(State& prevState, const MoveInstruction instruction);
@@ -44,10 +48,11 @@ namespace Year2022::Day05 {
 		};
 
 		const std::string getTopOfStateColumns(const State& state) const;
-		
-	private:
 		const std::string stateToString(const State& state) const; // for debugging only
 		const std::string moveInstructionToString(const MoveInstruction& instr) const; // for debugging only
+
+		// Member Variables
+		const std::filesystem::path mInputFilePath;
 	};
 
 }

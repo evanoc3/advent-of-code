@@ -1,42 +1,36 @@
-#include <iostream>
-#include <filesystem>
-#include <fstream>
-#include "year_2022/day_01/solution.hpp"
+#include <vector>
+#include <sstream>
+#include "solution.hpp"
 
 
 using namespace Year2022::Day01;
 
 
-const Input Solution::getInput() const {
-	auto inputFilePath = std::filesystem::path(__FILE__);
-	inputFilePath.replace_filename("input.txt");
+Solution::Solution()
+	: mInputFilePath(std::filesystem::path(__FILE__).replace_filename("input.txt")) {
+}
 
-	std::ifstream inputFile;
-	inputFile.open(inputFilePath, std::ios::in);
 
+const Input Solution::parseInput(const std::string& rawInput) const {
+	std::stringstream inputStream(rawInput);
+	std::string line;
 	Input input;
 	std::vector<int> cur;
 
-	if(inputFile.is_open()) {
-		std::string line;
-		int lineAsInt;
-		while(getline(inputFile, line)) {
-			try {
-				lineAsInt = std::stoi(line);
-				cur.push_back(lineAsInt);
-			}
-			catch(const std::invalid_argument& ex) {
-				input.push_back(cur);
-				cur = std::vector<int>();
-				continue;
-			}
+	while(std::getline(inputStream, line)) {
+		if(line.length() > 0) {
+			cur.push_back( std::stoi(line) );
+		}
+		else {
+			input.push_back(cur);
+			cur = std::vector<int>();
 		}
 	}
-	inputFile.close();
 
 	if(!cur.empty()) {
 		input.push_back(cur);
 	}
+
 	return input;
 }
 

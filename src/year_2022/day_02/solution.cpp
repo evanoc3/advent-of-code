@@ -1,27 +1,20 @@
-#include <iostream>
-#include <filesystem>
-#include <fstream>
-#include "year_2022/day_02/solution.hpp"
+#include <sstream>
+#include "solution.hpp"
 
 
 using namespace Year2022::Day02;
 
 
-const Input Solution::getInput() const {
-	auto inputFilePath = std::filesystem::path(__FILE__);
-	inputFilePath.replace_filename("input.txt");
+Solution::Solution()
+	: mInputFilePath(std::filesystem::path(__FILE__).replace_filename("input.txt")) {
+}
 
-	std::ifstream inputFile;
-	inputFile.open(inputFilePath, std::ios::in);
-
+const Input Solution::parseInput(const std::string& rawInput) const {
+	std::stringstream inputStream(rawInput);
+	std::string line;
 	Input input;
 
-	if(!inputFile.is_open()) {
-		return input;
-	}
-
-	std::string line;
-	while(getline(inputFile, line)) {
+	while(std::getline(inputStream, line)) {
 		if(line.length() != 3) {
 			continue;
 		}
@@ -30,7 +23,6 @@ const Input Solution::getInput() const {
 		input.push_back(pair);
 	}
 	
-	inputFile.close();
 	return input;
 }
 

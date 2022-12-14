@@ -1,9 +1,7 @@
 #pragma once
-#include <string>
+
 #include <vector>
 #include <memory>
-#include <functional>
-
 #include "utils/ISolution.hpp"
 
 
@@ -27,35 +25,40 @@ namespace Year2022::Day07 {
 	public:
 		Dir(const std::string name);
 
+		int getSize() const;
+		Dir* getSubDir(const std::string& dirName) const;
+
 		Dir* parent;
 		const std::string name;
 		std::vector<DirPtr> subDirs;
 		std::vector<FilePtr> files;
-
-		int getSize() const;
-		Dir* getSubDir(const std::string dirName) const;
 	};
 
 
 	using Input = DirPtr;
 	
 	
-	class Solution final : public IGetInputMutable<void> 
-											 , public IPart1<const int>
-											 , public IPart2<const int> {
+	class Solution final : public IParseInput<void> 
+											 , public ISolution<const int, const int> {
 	public:
+		Solution();
 		~Solution() = default;
 		
-		void getInput();
+		// IParseInput
+		void parseInput(const std::string& rawInput);
+
+		// ISolution
 		const int part1() const;
 		const int part2() const;
 
+		// Public Methods
 		const std::vector<const Dir*> getDirsUnder100Kb(const Dir* rootDir) const;
 		const std::vector<const Dir*> getDirsOverSize(const Dir* dir, const int minSize) const;
-
 		static bool compareDirSizes(const Dir*& dir1, const Dir*& dir2);
 
-		Input input{ nullptr };
+		// Member Variables
+		Input mInput{ nullptr };
+		const std::filesystem::path mInputFilePath;
 	};
 	
 }

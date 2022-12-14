@@ -1,4 +1,5 @@
 #include <catch.hpp>
+#include "utils/FileUtils.hpp"
 #include "solution.hpp"
 
 
@@ -9,29 +10,49 @@ namespace Year2022::Day05 {
 
 	class SolutionTests {
 	public:
-		SolutionTests()	
-			: solution(std::make_unique<Solution>()) {
+		SolutionTests()
+			: mSolution(std::make_unique<Solution>())
+			, mSampleRawInput("    [D]    \n"
+												"[N] [C]    \n"
+												"[Z] [M] [P]\n"
+												" 1   2   3 \n"
+												"\n"
+												"move 1 from 2 to 1\n"
+												"move 3 from 1 to 3\n"
+												"move 2 from 2 to 1\n"
+												"move 1 from 1 to 2\n")
+			, mActualRawInput(Utils::getFileContents(mSolution->mInputFilePath)) {
 		}
-
-		std::unique_ptr<Solution> solution;
+	
+		const std::unique_ptr<Solution> mSolution;
+		const std::string mSampleRawInput;
+		const std::string mActualRawInput;
 	};
 
 }
 
 
-TEST_CASE_METHOD(SolutionTests, "Year2022::Day05::Solution::getInput", "[Year2022][Day05]")
+TEST_CASE_METHOD(SolutionTests, "Year2022::Day05::Solution::parseInput", "[Year2022][Day05][parseInput]")
 {
-	const auto actualInput = solution->getInput();
+	GIVEN("Sample Raw Input")
+	{
+		const auto parsedInput = mSolution->parseInput(mSampleRawInput);
+	}
 
-	// test initialState
-	REQUIRE( actualInput.initialState.size() == 9 );
-	REQUIRE(actualInput.initialState[0] == std::deque<char>{'S', 'P', 'H', 'V', 'F', 'G'});
-	REQUIRE(actualInput.initialState[8] == std::deque<char>{'J', 'Q', 'V', 'P', 'G', 'L', 'F'});
+	GIVEN("Actual Raw Input")
+	{
+		const auto parsedInput = mSolution->parseInput(mActualRawInput);
 
-	// test moveInstructions
-	REQUIRE(actualInput.moveInstructions.size() ==  502);
-	REQUIRE(actualInput.moveInstructions.front() == MoveInstruction{ 6, 9, 3 });
-	REQUIRE(actualInput.moveInstructions.back() == MoveInstruction{ 1, 5, 9 });
+		// test initialState
+		REQUIRE( parsedInput.initialState.size() == 9 );
+		REQUIRE( parsedInput.initialState[0] == std::deque<char>{'S', 'P', 'H', 'V', 'F', 'G'} );
+		REQUIRE( parsedInput.initialState[8] == std::deque<char>{'J', 'Q', 'V', 'P', 'G', 'L', 'F'} );
+
+		// test moveInstructions
+		REQUIRE( parsedInput.moveInstructions.size() ==  502 );
+		REQUIRE( parsedInput.moveInstructions.front() == MoveInstruction{ 6, 9, 3 } );
+		REQUIRE( parsedInput.moveInstructions.back() == MoveInstruction{ 1, 5, 9 } );
+	}
 }
 
 
@@ -81,31 +102,19 @@ TEST_CASE_METHOD(SolutionTests, "Year2022::Day05::Solution::Part1::performMove",
 }
 
 
-TEST_CASE_METHOD(SolutionTests, "Year2022::Day05::Solution::part1", "[Year2022][Day05]")
+TEST_CASE_METHOD(SolutionTests, "Year2022::Day05::Solution::part1", "[Year2022][Day05][part1]")
 {
-		GIVEN("Sample input")
-		{
-			const Input sampleInput = {
-				{
-					{ 'N', 'Z' },
-					{ 'D', 'C', 'M' },
-					{ 'P' }
-				},
-				{
-					{ 1, 2, 1 },
-					{ 3, 1, 3 },
-					{ 2, 2, 1 },
-					{ 1, 1, 2 }
-				}
-			};
+	GIVEN("Sample Input")
+	{
+		const auto parsedInput = mSolution->parseInput(mSampleRawInput);
+		REQUIRE( mSolution->part1(parsedInput) == "CMZ" );
+	}
 
-			REQUIRE( solution->part1(sampleInput) == "CMZ" );
-		}
-
-		GIVEN("Real input")
-		{
-			REQUIRE( solution->part1(solution->getInput()) == "FCVRLMVQP" );
-		}
+	GIVEN("Actual Input")
+	{
+		const auto parsedInput = mSolution->parseInput(mActualRawInput);
+		REQUIRE( mSolution->part1(parsedInput) == "FCVRLMVQP" );
+	}
 }
 
 
@@ -155,29 +164,17 @@ TEST_CASE_METHOD(SolutionTests, "Year2022::Day05::Solution::Part2::performMove",
 }
 
 
-TEST_CASE_METHOD(SolutionTests, "Year2022::Day05::Solution::part2", "[Year2022][Day05]")
+TEST_CASE_METHOD(SolutionTests, "Year2022::Day05::Solution::part2", "[Year2022][Day05][part2]")
 {
-		GIVEN("Sample input")
-		{
-			const Input sampleInput = {
-				{
-					{ 'N', 'Z' },
-					{ 'D', 'C', 'M' },
-					{ 'P' }
-				},
-				{
-					{ 1, 2, 1 },
-					{ 3, 1, 3 },
-					{ 2, 2, 1 },
-					{ 1, 1, 2 }
-				}
-			};
+	GIVEN("Sample Input")
+	{
+		const auto parsedInput = mSolution->parseInput(mSampleRawInput);
+		REQUIRE( mSolution->part2(parsedInput) == "MCD" );
+	}
 
-			REQUIRE( solution->part2(sampleInput) == "MCD" );
-		}
-
-		GIVEN("Real input")
-		{
-			REQUIRE( solution->part2(solution->getInput()) == "RWLWGJGFD" );
-		}
+	GIVEN("Actual Input")
+	{
+		const auto parsedInput = mSolution->parseInput(mActualRawInput);
+		REQUIRE( mSolution->part2(parsedInput) == "RWLWGJGFD" );
+	}
 }

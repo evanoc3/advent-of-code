@@ -1,18 +1,25 @@
 #pragma once
 
+#include <string>
+#include <filesystem>
+
 
 /* Get Input Templates */
 
 template<typename Input_t>
-class IGetInputMutable {
+class IParseInput {
 public:
-	virtual Input_t getInput() = 0;
+	virtual Input_t parseInput(const std::string& rawInput) = 0;
+
+	const std::filesystem::path mInputFilePath;
 };
 
 template<typename Input_t>
-class IGetInput {
+class IParseInputConst {
 public:
-	virtual Input_t getInput() const = 0;
+	virtual Input_t parseInput(const std::string& rawInput) const = 0;
+
+	const std::filesystem::path mInputFilePath;
 };
 
 

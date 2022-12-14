@@ -1,65 +1,88 @@
 #include <catch.hpp>
-#include "year_2022/day_04/solution.hpp"
+#include "utils/FileUtils.hpp"
+#include "solution.hpp"
 
 
 using namespace Year2022::Day04;
 
 
-TEST_CASE("Year2022::Day04::Solution", "[Year2022][Day04]")
+namespace Year2022::Day04 {
+
+	class SolutionTests {
+	public:
+		SolutionTests()
+			: mSolution(std::make_unique<Solution>())
+			, mSampleRawInput("2-4,6-8\n"
+												"2-3,4-5\n"
+												"5-7,7-9\n"
+												"2-8,3-7\n"
+												"6-6,4-6\n"
+												"2-6,4-8\n")
+			, mActualRawInput(Utils::getFileContents(mSolution->mInputFilePath)) {
+		}
+	
+		const std::unique_ptr<Solution> mSolution;
+		const std::string mSampleRawInput;
+		const std::string mActualRawInput;
+	};
+
+}
+
+
+TEST_CASE_METHOD(SolutionTests, "Year2022::Day04::Solution::parseInput", "[Year2022][Day04][parseInput]")
 {
-	const auto solution = std::make_unique<Solution>();
-
-	SECTION("getInput")
+	GIVEN("Sample Raw Input")
 	{
-		const auto actualInput = solution->getInput();
+		const auto parsedInput = mSolution->parseInput(mSampleRawInput);
 
-		REQUIRE( actualInput.front().first == range(7, 24) );
-		REQUIRE( actualInput.front().second == range(8, 8) );
+		REQUIRE( parsedInput.front().first == range(2, 4) );
+		REQUIRE( parsedInput.front().second == range(6, 8) );
 
-		REQUIRE( actualInput.back().first == range(23, 79) );
-		REQUIRE( actualInput.back().second == range(22, 24) );
+		REQUIRE( parsedInput.back().first == range(2, 6) );
+		REQUIRE( parsedInput.back().second == range(4, 8) );
 	}
 
-	SECTION("part1")
+	GIVEN("Actual Raw Input")
 	{
-		GIVEN("Sample input")
-		{
-			const Input sampleInput = {
-				{ {2, 4}, {6, 8} },
-				{ {2, 3}, {4, 5} },
-				{ {5, 7}, {7, 9} },
-				{ {2, 8}, {3, 7} },
-				{ {6, 6}, {4, 6} },
-				{ {2, 6}, {4, 8} }
-			};
+		const auto parsedInput = mSolution->parseInput(mActualRawInput);
 
-			REQUIRE( solution->part1(sampleInput) == 2 );
-		}
+		REQUIRE( parsedInput.front().first == range(7, 24) );
+		REQUIRE( parsedInput.front().second == range(8, 8) );
 
-		GIVEN("Real input") {
-			REQUIRE( solution->part1(solution->getInput()) == 562 );
-		}
-	}
-
-	SECTION("part2")
-	{
-		GIVEN("Sample input")
-		{
-			const Input sampleInput = {
-				{ {2, 4}, {6, 8} },
-				{ {2, 3}, {4, 5} },
-				{ {5, 7}, {7, 9} },
-				{ {2, 8}, {3, 7} },
-				{ {6, 6}, {4, 6} },
-				{ {2, 6}, {4, 8} }
-			};
-
-			REQUIRE( solution->part2(sampleInput) == 4 );
-		}
-
-		GIVEN("Real input")
-		{
-			REQUIRE( solution->part2(solution->getInput()) == 924 );
-		}
+		REQUIRE( parsedInput.back().first == range(23, 79) );
+		REQUIRE( parsedInput.back().second == range(22, 24) );
 	}
 }
+
+
+TEST_CASE_METHOD(SolutionTests, "Year2022::Day04::Solution::part1", "[Year2022][Day04][part1]")
+{
+	GIVEN("Sample input")
+	{
+		const auto parsedInput = mSolution->parseInput(mSampleRawInput);
+		REQUIRE( mSolution->part1(parsedInput) == 2 );
+	}
+
+	GIVEN("Real input")
+	{
+		const auto parsedInput = mSolution->parseInput(mActualRawInput);
+		REQUIRE( mSolution->part1(parsedInput) == 562 );
+	}
+}
+
+
+TEST_CASE_METHOD(SolutionTests, "Year2022::Day04::Solution::part2", "[Year2022][Day04][part2]")
+{
+	GIVEN("Sample input")
+	{
+		const auto parsedInput = mSolution->parseInput(mSampleRawInput);
+		REQUIRE( mSolution->part2(parsedInput) == 4 );
+	}
+
+	GIVEN("Real input")
+	{
+		const auto parsedInput = mSolution->parseInput(mActualRawInput);
+		REQUIRE( mSolution->part2(parsedInput) == 924 );
+	}
+}
+

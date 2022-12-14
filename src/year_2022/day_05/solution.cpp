@@ -1,34 +1,27 @@
-#include <filesystem>
-#include <fstream>
 #include <cctype>
 #include <regex>
 #include <iostream>
-#include "utils/StringUtils.hpp"
+#include <sstream>
 #include "solution.hpp"
 
 
 using namespace Year2022::Day05;
 
 
-const Input Solution::getInput() const {
-	auto inputFilePath = std::filesystem::path(__FILE__);
-	inputFilePath.replace_filename("input.txt");
+Solution::Solution()
+	: mInputFilePath(std::filesystem::path(__FILE__).replace_filename("input.txt")) {
+}
 
-	std::ifstream inputFile;
-	inputFile.open(inputFilePath, std::ios::in);
 
-	Input input;
-
-	if(!inputFile.is_open()) {
-		return input;
-	}
-
+const Input Solution::parseInput(const std::string& rawInput) const {
+	std::stringstream inputStream(rawInput);
 	std::string line;
+	Input input;
 	auto parsingInitialState{ true };
 	const std::regex moveInstructionRegex(R"(move (\d+) from (\d+) to (\d+))");
 	auto i{ 0 };
 
-	while(getline(inputFile, line)) {
+	while(std::getline(inputStream, line)) {
 		// parsing the size of the initial state from the first line
 		if(i == 0) {
 			const int initialStateSize = (line.size() + 1) / 4;
@@ -65,7 +58,6 @@ const Input Solution::getInput() const {
 		i++;
 	}
 
-	inputFile.close();
 	return input;
 }
 

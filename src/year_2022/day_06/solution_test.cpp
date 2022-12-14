@@ -1,4 +1,5 @@
 #include <catch.hpp>
+#include "utils/FileUtils.hpp"
 #include "solution.hpp"
 
 
@@ -10,60 +11,50 @@ namespace Year2022::Day06 {
 	class SolutionTests {
 	public:
 		SolutionTests()
-			: solution(std::make_unique<Solution>()) {
+			: mSolution(std::make_unique<Solution>())
+			, mSampleRawInput("mjqjpqmgbljsphdztnvjfqwrcgsmlb\n")
+			, mActualRawInput(Utils::getFileContents(mSolution->mInputFilePath)) {
 		}
-		
-		std::unique_ptr<Solution> solution;
+	
+		const std::unique_ptr<Solution> mSolution;
+		const std::string mSampleRawInput;
+		const std::string mActualRawInput;
 	};
 
 }
 
 
-TEST_CASE_METHOD(SolutionTests, "Year2022::Day06::Solution::getInput", "[Year2022][Day06]")
+TEST_CASE_METHOD(SolutionTests, "Year2022::Day06::Solution::part1", "[Year2022][Day06][part1]")
 {
-	const auto actualInput = solution->getInput();
-
-	REQUIRE( actualInput.at(0) == 'q' );
-	REQUIRE( actualInput.at(1) == 'f' );
-
-	REQUIRE( actualInput.at(actualInput.size() - 1) == 'f' );
-	REQUIRE( actualInput.at(actualInput.size() - 2) == 't' );
-}
-
-
-TEST_CASE_METHOD(SolutionTests, "Year2022::Day06::Solution::part1", "[Year2022][Day06]")
-{
-	GIVEN("Sample input")
+	GIVEN("Sample Input")
 	{
-		REQUIRE( solution->part1("mjqjpqmgbljsphdztnvjfqwrcgsmlb") == 7 );
-		REQUIRE( solution->part1("bvwbjplbgvbhsrlpgdmjqwftvncz") == 5 );
-		REQUIRE( solution->part1("nppdvjthqldpwncqszvftbrmjlhg") == 6 );
-		REQUIRE( solution->part1("nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg") == 10 );
-		REQUIRE( solution->part1("zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw") == 11 );
+		REQUIRE( mSolution->part1("mjqjpqmgbljsphdztnvjfqwrcgsmlb") == 7 );
+		REQUIRE( mSolution->part1("bvwbjplbgvbhsrlpgdmjqwftvncz") == 5 );
+		REQUIRE( mSolution->part1("nppdvjthqldpwncqszvftbrmjlhg") == 6 );
+		REQUIRE( mSolution->part1("nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg") == 10 );
+		REQUIRE( mSolution->part1("zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw") == 11 );
 	}
 	
-	GIVEN("Real input")
+	GIVEN("Actual Input")
 	{
-		REQUIRE( solution->part1(solution->getInput()) == 1598 );
+		REQUIRE( mSolution->part1(mActualRawInput) == 1598 );
 	}
 }
 
 
-TEST_CASE_METHOD(SolutionTests, "Year2022::Day06::Solution::part2", "[Year2022][Day06]")
+TEST_CASE_METHOD(SolutionTests, "Year2022::Day06::Solution::part2", "[Year2022][Day06][part2]")
 {
 	GIVEN("Sample input")
 	{
-		REQUIRE( solution->part2("mjqjpqmgbljsphdztnvjfqwrcgsmlb") == 19 );
-		REQUIRE( solution->part2("bvwbjplbgvbhsrlpgdmjqwftvncz") == 23 );
-		REQUIRE( solution->part2("nppdvjthqldpwncqszvftbrmjlhg") == 23 );
-		REQUIRE( solution->part2("nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg") == 29 );
-		REQUIRE( solution->part2("zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw") == 26 );
+		REQUIRE( mSolution->part2("mjqjpqmgbljsphdztnvjfqwrcgsmlb") == 19 );
+		REQUIRE( mSolution->part2("bvwbjplbgvbhsrlpgdmjqwftvncz") == 23 );
+		REQUIRE( mSolution->part2("nppdvjthqldpwncqszvftbrmjlhg") == 23 );
+		REQUIRE( mSolution->part2("nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg") == 29 );
+		REQUIRE( mSolution->part2("zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw") == 26 );
 	}
 	
 	GIVEN("Real input")
 	{
-		// do some assertions on the output of part2 here
-		// const auto expectedOutput = /* insert the expected output here */;
-		// REQUIRE( solution->part2(solution->getInput()) == expectedOutput );
+		REQUIRE( mSolution->part2(mActualRawInput) == 2414 );
 	}
 }

@@ -1,65 +1,85 @@
 #include <catch.hpp>
-#include "year_2022/day_02/solution.hpp"
+#include "utils/FileUtils.hpp"
+#include "solution.hpp"
 
 
 using namespace Year2022::Day02;
 
 
-TEST_CASE("Year2022::Day02::Solution", "[Year2022][Day02]")
+namespace Year2022::Day02 {
+
+	class SolutionTests {
+	public:
+		SolutionTests()
+			: mSolution(std::make_unique<Solution>())
+			, mSampleRawInput("A Y\n"
+												"B X\n"
+												"C Z\n")
+			, mActualRawInput(Utils::getFileContents(mSolution->mInputFilePath)) {
+		}
+	
+		const std::unique_ptr<Solution> mSolution;
+		const std::string mSampleRawInput;
+		const std::string mActualRawInput;
+	};
+
+}
+
+
+TEST_CASE_METHOD(SolutionTests, "Year2022::Day02::Solution::parseInput", "[Year2022][Day02][parseInput]")
 {
-	const auto solution = std::make_unique<Solution>();
-
-	SECTION("getInput")
+	GIVEN("Sample raw input")
 	{
-		const auto actualInput = solution->getInput();
-		REQUIRE( actualInput.front().first == 'B' );
-		REQUIRE( actualInput.front().second == 'X' );
+		const auto parsedInput = mSolution->parseInput(mSampleRawInput);
 
-		REQUIRE( actualInput.back().first == 'A' );
-		REQUIRE( actualInput.back().second == 'Y' );
+		REQUIRE( parsedInput.size() == 3 );
+		REQUIRE( parsedInput.front().first == 'A' );
+		REQUIRE( parsedInput.front().second == 'Y' );
+
+		REQUIRE( parsedInput.back().first == 'C' );
+		REQUIRE( parsedInput.back().second == 'Z' );
 	}
 
-	SECTION("part1")
+	GIVEN("Actual raw input")
 	{
-		GIVEN("Sample input")
-		{
-			const Input sampleInput = {
-				{ 'A', 'Y' },
-				{ 'B', 'X' },
-				{ 'C', 'Z' }
-			};
+		const auto parsedInput = mSolution->parseInput(mActualRawInput);
 
-			const auto actualResult = solution->part1(sampleInput);
-			REQUIRE( actualResult == 15 );
-		}
+		REQUIRE( parsedInput.front().first == 'B' );
+		REQUIRE( parsedInput.front().second == 'X' );
 
-		GIVEN("Real input")
-		{
-			const auto actualResult = solution->part1( solution->getInput() );
-			REQUIRE( actualResult == 15337 );
-		}
+		REQUIRE( parsedInput.back().first == 'A' );
+		REQUIRE( parsedInput.back().second == 'Y' );
+	}
+}
+
+
+TEST_CASE_METHOD(SolutionTests, "Year2022::Day02::Solution::part1", "[Year2022][Day02][part1]")
+{
+	GIVEN("Sample input")
+	{
+		const auto parsedInput = mSolution->parseInput(mSampleRawInput);
+		REQUIRE( mSolution->part1(parsedInput) == 15 );
 	}
 
-	SECTION("part2")
+	GIVEN("Real input")
 	{
-		GIVEN("Sample input")
-		{
-			const Input sampleInput = {
-				{ 'A', 'Y' },
-				{ 'B', 'X' },
-				{ 'C', 'Z' }
-			};
+		const auto parsedInput = mSolution->parseInput(mActualRawInput);
+		REQUIRE( mSolution->part1(parsedInput) == 15337 );
+	}
+}
 
-			const auto actualResult = solution->part2(sampleInput);
-			REQUIRE( actualResult == 12 );
-		}
 
-		GIVEN("Real input")
-		{
-			const auto actualResult = solution->part2(solution->getInput());
-			REQUIRE( actualResult == 11696 );
-		}
+TEST_CASE_METHOD(SolutionTests, "Year2022::Day02::Solution::part2", "[Year2022][Day02][part2]")
+{
+	GIVEN("Sample input")
+	{
+		const auto parsedInput = mSolution->parseInput(mSampleRawInput);
+		REQUIRE( mSolution->part2(parsedInput) == 12 );
 	}
 
-
+	GIVEN("Real input")
+	{
+		const auto parsedInput = mSolution->parseInput(mActualRawInput);
+		REQUIRE( mSolution->part2(parsedInput) == 11696 );
+	}
 }

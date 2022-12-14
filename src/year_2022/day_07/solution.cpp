@@ -1,5 +1,4 @@
-#include <filesystem>
-#include <fstream>
+#include <sstream>
 #include <regex>
 #include <algorithm>
 #include "solution.hpp"
@@ -8,26 +7,22 @@
 using namespace Year2022::Day07;
 
 
-void Solution::getInput() {
-	auto inputFilePath = std::filesystem::path(__FILE__);
-	inputFilePath.replace_filename("input.txt");
+Solution::Solution()
+	: mInputFilePath(std::filesystem::path(__FILE__).replace_filename("input.txt")) {
+}
 
-	std::ifstream inputFile;
-	inputFile.open(inputFilePath, std::ios::in);
 
-	if(!inputFile.is_open()) {
-		return;
-	}
-
-	input = std::make_unique<Dir>("/");
-	Dir* cur = input.get();
+void Solution::parseInput(const std::string& rawInput) {
+	std::stringstream inputStream(rawInput);
+	mInput = std::make_unique<Dir>("/");
+	Dir* cur = mInput.get();
 
 	const std::regex cdRegex(R"(\$ cd ((?:\.\.|\w+|\/)))");
 	const std::regex fileRegex(R"((\d+) ((?:\w|\.)+))");
 	const std::regex dirRegex(R"(dir (\w+))");
 
 	std::string line;
-	while(getline(inputFile, line)) {
+	while(std::getline(inputStream, line)) {
 		std::smatch matches;
 		
 		// cd commands
@@ -61,9 +56,6 @@ void Solution::getInput() {
 			cur->subDirs.back()->parent = cur;
 		}
 	}
-
-	inputFile.close();
-	return;
 }
 
 
@@ -93,7 +85,7 @@ int Dir::getSize() const {
 }
 
 
-Dir* Dir::getSubDir(const std::string searchDirName) const {
+Dir* Dir::getSubDir(const std::string& searchDirName) const {
 	for(auto& subDir : subDirs) {
 		if(subDir->name == searchDirName) {
 			return subDir.get();
@@ -106,7 +98,7 @@ Dir* Dir::getSubDir(const std::string searchDirName) const {
 const int Solution::part1() const {
 	int accumulator = 0;
 
-	const auto dirsOver100Kb = getDirsUnder100Kb(input.get());
+	const auto dirsOver100Kb = getDirsUnder100Kb(mInput.get());
 	for(const auto& dir : dirsOver100Kb) {
 		if(dir != nullptr) {
 			accumulator += dir->getSize();
@@ -144,11 +136,11 @@ const std::vector<const Dir*> Solution::getDirsUnder100Kb(const Dir* dir) const 
 
 
 const int Solution::part2() const {
-	const auto unusedSpace = 70000000 - input->getSize();
+	const auto unusedSpace = 70000000 - mInput->getSize();
 	const auto spaceNeeded = 30000000 - unusedSpace;
 
 	// remove nullptrs from the vector of arrays
-	auto dirs = getDirsOverSize(input.get(), spaceNeeded);
+	auto dirs = getDirsOverSize(mInput.get(), spaceNeeded);
 	dirs.erase(std::remove_if(dirs.begin(), dirs.end(), [](const auto& dir) {
 		return dir == nullptr;
 	}));

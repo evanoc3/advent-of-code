@@ -17,6 +17,7 @@ endif()
 add_library(
 	lib-advent-of-code
 
+	src/utils/FileUtils.cpp
 	src/year_2022/day_01/solution.cpp
 	src/year_2022/day_02/solution.cpp
 	src/year_2022/day_03/solution.cpp

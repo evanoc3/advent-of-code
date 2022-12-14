@@ -1,6 +1,3 @@
-#include <filesystem>
-#include <fstream>
-#include <iostream>
 #include <vector>
 #include <algorithm>
 #include "solution.hpp"
@@ -9,24 +6,13 @@
 using namespace Year2022::Day06;
 
 
-const Input Solution::getInput() const {
-	auto inputFilePath = std::filesystem::path(__FILE__);
-	inputFilePath.replace_filename("input.txt");
+Solution::Solution()
+	: mInputFilePath(std::filesystem::path(__FILE__).replace_filename("input.txt")) {
+}
 
-	std::ifstream inputFile;
-	inputFile.open(inputFilePath, std::ios::in);
 
-	Input input;
-
-	if(!inputFile.is_open()) {
-		return input;
-	}
-
-	std::string line;
-	getline(inputFile, line);
-
-	inputFile.close();
-	return line;
+const Input Solution::parseInput(const std::string& rawInput) const {
+	return rawInput;
 }
 
 
@@ -42,7 +28,7 @@ const int Solution::part1(const Input& input) const {
 }
 
 
-const bool Solution::substringIsUnique(const std::string substr) const {
+const bool Solution::substringIsUnique(const std::string& substr) const {
 	std::vector<char> charVec( substr.size() );
 
 	for(auto i = 0; i < substr.size(); i++) {

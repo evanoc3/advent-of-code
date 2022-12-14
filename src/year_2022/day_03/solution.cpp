@@ -1,27 +1,22 @@
-#include <filesystem>
-#include <fstream>
+#include <sstream>
 #include <algorithm>
-#include "year_2022/day_03/solution.hpp"
+#include "solution.hpp"
 
 
 using namespace Year2022::Day03;
 
 
-const Input Solution::getInput() const {
-	auto inputFilePath = std::filesystem::path(__FILE__);
-	inputFilePath.replace_filename("input.txt");
+Solution::Solution()
+	: mInputFilePath(std::filesystem::path(__FILE__).replace_filename("input.txt")) {
+}
 
-	std::ifstream inputFile;
-	inputFile.open(inputFilePath, std::ios::in);
 
+const Input Solution::parseInput(const std::string& rawInput) const {
+	std::stringstream inputStream(rawInput);
+	std::string line;
 	Input input;
 
-	if(!inputFile.is_open()) {
-		return input;
-	}
-
-	std::string line;
-	while(getline(inputFile, line)) {
+	while(std::getline(inputStream, line)) {
 		const auto lineLength = line.size();
 		
 		const auto firstCompartmentStr = line.substr(0, lineLength / 2);
@@ -32,7 +27,6 @@ const Input Solution::getInput() const {
 		});
 	}
 	
-	inputFile.close();
 	return input;
 }
 
@@ -54,7 +48,7 @@ const int Solution::part1(const Input& input) const {
 }
 
 
-const char Solution::getCommonLetter(const Rucksack rucksack) const {
+const char Solution::getCommonLetter(const Rucksack& rucksack) const {
 	for(const char& c1 : rucksack.firstCompartment) {
 		for(const char& c2 : rucksack.secondCompartment) {
 			if(c1 == c2) {
@@ -115,7 +109,7 @@ const bool Rucksack::contains(const char c) const {
 }
 
 
-const char Solution::getCommonLetter(const Rucksack rucksackA, const Rucksack rucksackB, const Rucksack rucksackC) const {
+const char Solution::getCommonLetter(const Rucksack& rucksackA, const Rucksack& rucksackB, const Rucksack& rucksackC) const {
 	for(const char& c : rucksackA.contents()) {
 		if(rucksackB.contains(c) && rucksackC.contains(c)) {
 			return c;

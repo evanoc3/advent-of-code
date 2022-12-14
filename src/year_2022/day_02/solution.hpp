@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-#include <string>
 #include <utility>
 #include "utils/ISolution.hpp"
 
@@ -24,15 +23,20 @@ namespace Year2022::Day02 {
 	};
 
 
-	class Solution final : public IGetInput<const Input>
+	class Solution final : public IParseInputConst<const Input>
 											 , public ISolutionWithInput<const Input&, const int, const int> {
 	public:
+		Solution();
 		~Solution() = default;
 
-		const Input getInput() const override;
+		// IParseInputConst
+		const Input parseInput(const std::string& rawInput) const override;
+
+		// ISolutionWithInput
 		const int part1(const Input& input) const override;
 		const int part2(const Input& input) const override;
 
+		// Public Members
 		class Part1 {
 		public:
 			static const int calculateScore(const RockPaperScissorsPlay opponentPlay, const RockPaperScissorsPlay yourPlay);
@@ -48,6 +52,9 @@ namespace Year2022::Day02 {
 			static const RockPaperScissorsPlay getPlayToDrawAgainst(const RockPaperScissorsPlay opponentPlay);
 			static const RockPaperScissorsPlay getPlayToLoseAgainst(const RockPaperScissorsPlay opponentPlay);
 		};
+
+		// Member Variables
+		const std::filesystem::path mInputFilePath;
 	};
 
 }
