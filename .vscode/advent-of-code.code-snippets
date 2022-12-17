@@ -1,7 +1,7 @@
 {
-	"Solution Header": {
+	"C++: Solution Header": {
 		"scope": "cpp",
-		"prefix": "solution-header",
+		"prefix": "cpp-header",
 		"body": [
 			"#pragma once",
 			"",
@@ -40,9 +40,9 @@
 		"description": "Template for the header file of solution classes"
 	},
 
-	"Solution Implementation": {
+	"C++: Solution Implementation": {
 		"scope": "cpp",
-		"prefix": "solution-implementation",
+		"prefix": "cpp-implementation",
 		"body": [
 			"#include <sstream>",
 			"#include \"solution.hpp\"",
@@ -80,9 +80,9 @@
 		"description": "Implementation of a solution class"
 	},
 
-	"Solution Test Case": {
+	"C++: Solution Test Case": {
 		"scope": "cpp",
-		"prefix": "solution-testcase",
+		"prefix": "cpp-testcase",
 		"body": [
 			"#include <catch.hpp>",
 			"#include \"solution.hpp\"",
@@ -173,9 +173,9 @@
 		"description": "Catch2 test case for solution classes"
 	},
 
-	"Print Solution Output": {
+	"C++: Print Solution Output": {
 		"scope": "cpp",
-		"prefix": "solution-main",
+		"prefix": "cpp-main",
 		"body": [
 			"// year 2022 day ${1:DayNum}",
 			"{",
@@ -186,6 +186,20 @@
 			"\t//std::cout << \"Year2022::Day$1::Solution->part2(): \" << solution->part2(parsedInput) << std::endl;",
 			"\tstd::cout << std::endl;",
 			"}"
+		]
+	},
+
+	"Python: Print Solution Output": {
+		"scope": "python",
+		"prefix": "py-main",
+		"body": [
+			"# Year 2021 Day ${1:DayNum}",
+			"with open(day_$1.input_file_path, \"r\") as day_$1_input_file:",
+			"\tday_$1_input = day_$1_input_file.readlines()",
+			"day_$1_solution = day_$1.Solution(day_$1_input)",
+			"print(\"Year 2021 Day $1\")",
+			"day_$1_solution.main()",
+			"print()"
 		]
 	}
 }

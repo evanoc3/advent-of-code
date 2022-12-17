@@ -34,7 +34,7 @@ target_include_directories(lib-advent-of-code PUBLIC src)
 add_executable(
 	advent-of-code
 
-	src/main.cpp
+	src/year_2022/main.cpp
 )
 
 target_link_libraries(advent-of-code PRIVATE lib-advent-of-code)
@@ -44,7 +44,7 @@ target_link_libraries(advent-of-code PRIVATE lib-advent-of-code)
 add_executable(
 	advent-of-code-tests
 
-	src/test_runner.cpp
+	src/year_2022/test_runner.cpp
 	src/year_2022/day_01/solution_test.cpp
 	src/year_2022/day_02/solution_test.cpp
 	src/year_2022/day_03/solution_test.cpp

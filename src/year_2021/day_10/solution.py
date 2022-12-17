@@ -3,7 +3,7 @@
 from math import floor
 from pathlib import Path
 from typing import Optional
-from src.common import ISolution
+from src.utils.common import ISolution
 
 
 input_file_path = Path(__file__).parent / "input.txt"

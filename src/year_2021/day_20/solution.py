@@ -5,7 +5,7 @@ from pathlib import Path
 from src.year_2021.day_05.solution import Solution as Solution5
 from src.year_2021.day_09.solution import Solution as Solution9
 from src.year_2021.day_16.solution import Solution as Solution16
-from src.common import ISolution
+from src.utils.common import ISolution
 
 
 input_file_path = Path(__file__).parent / "input.txt"
