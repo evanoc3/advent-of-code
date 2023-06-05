@@ -1,0 +1,15 @@
+{
+	"Python: Print Solution Output": {
+		"scope": "python",
+		"prefix": "py-main",
+		"body": [
+			"# Year 2021 Day ${1:DayNum}",
+			"with open(day_$1.input_file_path, \"r\") as day_$1_input_file:",
+			"\tday_$1_input = day_$1_input_file.readlines()",
+			"day_$1_solution = day_$1.Solution(day_$1_input)",
+			"print(\"Year 2021 Day $1\")",
+			"day_$1_solution.main()",
+			"print()"
+		]
+	}
+}

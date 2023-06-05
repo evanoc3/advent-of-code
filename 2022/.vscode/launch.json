@@ -1,0 +1,25 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Debug target",
+			"type": "cppdbg",
+			"request": "launch",
+			"args": [ "${input:getDebugTestsFilter}" ],
+			"program": "${command:cmake.getLaunchTargetPath}",
+			"cwd": "${workspaceFolder}",
+			"osx": {
+				"MIMode": "lldb"
+			}
+		}
+	],
+	"inputs": [
+		{
+			"id": "getDebugTestsFilter",
+			"description": "Specify a filter for the tests to run",
+			"default": "",
+			"type": "promptString"
+
+		}
+	]
+}
