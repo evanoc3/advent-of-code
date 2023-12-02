@@ -21,3 +21,14 @@ func TestPart1(t *testing.T) {
 	// test on real input
 	require.Equal(2632, Part1(input))
 }
+
+
+func TestPart2(t *testing.T) {
+	require := require.New(t)
+
+	// test on sample input
+	require.Equal(2286, Part2(sample_input))
+
+	// test on real input
+	require.Equal(69629, Part2(input))
+}

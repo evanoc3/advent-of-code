@@ -11,16 +11,72 @@ import (
 var input string
 
 
+
+
 func Solve() {
 	fmt.Printf("day_02.part1: %d\n", Part1(input))
 }
 
 
 func Part1(input string) int {
-	type game struct {
-		reveals []map[string]int
+	games := parseInput(input)
+
+	const maxRedCubes = 12
+	const maxGreenCubes = 13
+	const maxBlueCubes = 14
+
+	incrementor := 0
+	for i, g := range games {
+		possible := true
+		for _, r := range g.reveals {
+			if r["red"] > maxRedCubes ||
+				 r["green"] > maxGreenCubes ||
+				 r["blue"] > maxBlueCubes {
+				possible = false
+				break
+			}
+		}
+		if possible {
+			incrementor += i + 1
+		}
 	}
 
+	return incrementor
+}
+
+
+func Part2(input string) int {
+	games := parseInput(input)
+
+	incrementor := 0
+	for _, g := range games {
+		var minRedCubes, minGreenCubes, minBlueCubes int
+
+		for _, r := range g.reveals {
+			if redCubes, ok := r["red"]; ok && redCubes > minRedCubes {
+				minRedCubes = r["red"]
+			}
+			if greenCubes, ok := r["green"]; ok && greenCubes > minGreenCubes {
+				minGreenCubes = r["green"]
+			}
+			if blueCubes, ok := r["blue"]; ok && blueCubes > minBlueCubes {
+				minBlueCubes = r["blue"]
+			}
+		}
+
+		incrementor += (minRedCubes * minGreenCubes * minBlueCubes)
+	}
+
+	return incrementor
+}
+
+
+type game struct {
+	reveals []map[string]int
+}
+
+
+func parseInput(input string) []game {
 	lines := strings.Split(input, "\n")
 
 	games := make([]game, 0, len(lines))
@@ -54,26 +110,5 @@ func Part1(input string) int {
 
 		games = append(games, g)
 	}
-
-	const maxRedCubes = 12
-	const maxGreenCubes = 13
-	const maxBlueCubes = 14
-
-	incrementor := 0
-	for i, g := range games {
-		possible := true
-		for _, r := range g.reveals {
-			if r["red"] > maxRedCubes ||
-				 r["green"] > maxGreenCubes ||
-				 r["blue"] > maxBlueCubes {
-				possible = false
-				break
-			}
-		}
-		if possible {
-			incrementor += i + 1
-		}
-	}
-
-	return incrementor
+	return games
 }
