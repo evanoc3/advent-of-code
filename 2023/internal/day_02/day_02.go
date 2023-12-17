@@ -14,7 +14,9 @@ var input string
 
 
 func Solve() {
-	fmt.Printf("day_02.part1: %d\n", Part1(input))
+	fmt.Printf("day_02.Part1: %d\n", Part1(input))
+	fmt.Printf("day_02.Part2: %d\n", Part2(input))
+	fmt.Println()
 }
 
 

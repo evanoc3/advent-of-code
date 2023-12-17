@@ -12,7 +12,9 @@ var input string
 
 
 func Solve() {
-	fmt.Printf("day_01.part1: %d\n", Part1(input))
+	fmt.Printf("day_01.Part1: %d\n", Part1(input))
+	fmt.Printf("day_01.Part2: %d\n", Part1(input))
+	fmt.Println()
 }
 
 
@@ -36,7 +38,6 @@ func Part1(input string) int {
 		}
 
 		totalNum := (firstDigit * 10) + lastDigit
-		fmt.Printf("(%d) (%d) (%d)\n", firstDigit, lastDigit, totalNum)
 
 		incrementor += totalNum
 	}
