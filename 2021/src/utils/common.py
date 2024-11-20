@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Any
+from typing import Any, Union
 
 
 class ISolution(ABC):
@@ -13,11 +13,11 @@ class ISolution(ABC):
 		pass
 
 	@abstractmethod
-	def part_1(self) -> int | str:
+	def part_1(self) -> Union[int, str]:
 		pass
 
 	@abstractmethod
-	def part_2(self) -> int | str:
+	def part_2(self) -> Union[int, str]:
 		pass
 
 	@abstractmethod

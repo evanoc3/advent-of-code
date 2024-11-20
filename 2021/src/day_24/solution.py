@@ -2,7 +2,7 @@
 
 from re import match
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Union
 from src.utils.common import ISolution
 
 
@@ -11,9 +11,9 @@ input_file_path = Path(__file__).parent / "input.txt"
 
 class Solution(ISolution):
 
-	_Instruction = tuple[str, str | int, Optional[str | int]]
+	_Instruction = tuple[str, Union[str, int], Optional[Union[str, int]]]
 
-	def parse_input(self, input_file_lines: list[str]) -> list[_Instruction]:
+	def _parse_input(self, input_file_lines: list[str]) -> list[_Instruction]:
 		instructions: list[Solution._Instruction] = []
 		for input_line in input_file_lines:
 			re_match = match(r"(\w{3}) ([wxyz])(?: ([wxyz\-0-9]+))?\n?", input_line)
