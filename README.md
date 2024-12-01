@@ -163,7 +163,7 @@ The solutions to problems are written in Python, and use the `unittest` package 
 The solutions to the 2022 problems are written in C++, and built using CMake. Catch2 is used as a framework for unit tests.
 
 <details open>
-	<summary><strong>Solutions Table</strong</summary>
+	<summary><strong>Solutions Table</strong></summary>
 	<table>
 		<thead>
 			<tr>
