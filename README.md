@@ -33,6 +33,8 @@ This is a monorepo containing the solution to multiple years worth of [Advent of
 			<td><a href="https://github.com/evanoc3/advent-of-code/blob/main/2022/src/day_01/solution.cpp#L61-L84" target="_blank">✅</a></td>
 			<td><a href="https://github.com/evanoc3/advent-of-code/blob/main/2023/internal/day_01/day_01.go#L21-L46" target="_blank">✅</a></td>
 			<td><a href="https://github.com/evanoc3/advent-of-code/blob/main/2023/internal/day_01/day_01.go#L49-L96" target="_blank">✅</a></td>
+			<td><a href="https://github.com/evanoc3/advent-of-code/blob/main/2024/src/day01/day01.ts#L9-L23" target="_blank">✅</a></td>
+			<td><a href="https://github.com/evanoc3/advent-of-code/blob/main/2024/src/day01/day01.ts#L25-L28" target="_blank">✅</a></td>
 		</tr>
 		<tr>
 			<td><strong>Day 2</strong></td>
@@ -309,4 +311,14 @@ The solutions to the [Advent of Code 2023](https://adventofcode.com/2023) proble
 
 # 2024
 
-Check back on 2024-12-01.
+The solutions to [Advent of Code 2024](https://adventofcode.com/2024) problems, written and tested in Deno.
+
+* To run:
+  ```sh
+	deno run -R ./src/main.ts
+	```
+
+* To test:
+	```sh
+	deno test -R
+	```
