@@ -32,8 +32,8 @@ export class Day01Solution implements ISolution<string[], number, number> {
 		const input = this.parseInput(inputText);
 
 		console.log("Day 01");
-		console.log(`Part 1: ${this.part1(input)}`);
-		console.log(`Part 2: ${this.part2(input)}`);
+		console.log("Part 1:", this.part1(input));
+		console.log("Part 2:", this.part2(input));
 	}
 
 }

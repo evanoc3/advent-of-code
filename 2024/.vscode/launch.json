@@ -6,14 +6,27 @@
 	"configurations": [
 		{
 			"request": "launch",
-			"name": "Main",
+			"name": "current file",
 			"type": "node",
-			"program": "${workspaceFolder}/src/main.ts",
+			"program": "${file}",
 			"cwd": "${workspaceFolder}",
-			"env": {},
-			"runtimeExecutable": "/opt/homebrew/bin/deno",
+			"runtimeExecutable": "deno",
 			"runtimeArgs": [
 				"run",
+				"--inspect-wait",
+				"--allow-all"
+			],
+			"attachSimplePort": 9229
+		},
+		{
+			"request": "launch",
+			"name": "current test",
+			"type": "node",
+			"program": "${file}",
+			"cwd": "${workspaceFolder}",
+			"runtimeExecutable": "deno",
+			"runtimeArgs": [
+				"test",
 				"--inspect-wait",
 				"--allow-all"
 			],

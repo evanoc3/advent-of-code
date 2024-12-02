@@ -13,20 +13,22 @@ export class Day02Solution implements ISolution<number[][], number, number> {
 
 	public part1(reports: number[][]): number {
 		return reports.reduce((acc, report) => {
-			return acc + (isReportSafe(report) ? 1 : 0);
+			return acc + Number(isReportSafe(report));
 		}, 0);
 	}
 
-	public part2(_numbers: number[][]): number {
-		return 0;
+	public part2(reports: number[][]): number {
+		return reports.reduce((acc, report) => {
+			return acc + Number(isReportSafeWithProblemDampener(report));
+		}, 0);
 	}
 
 	public main(): void {
 		const input = Deno.readTextFileSync('src/day02/input.txt');
 		const numbers = this.parseInput(input);
 		console.log("Day 02");
-		console.log('Part 1:', this.part1(numbers));
-		console.log('Part 2:', this.part2(numbers));
+		console.log("Part 1:", this.part1(numbers));
+		console.log("Part 2:", this.part2(numbers));
 	}
 
 }
@@ -39,24 +41,59 @@ if (import.meta.main) {
 
 
 function isReportSafe(report: number[]): boolean {
-	const direction = (report[0] > report.at(-1)!) ? "decreasing" : "increasing";
-	for(let i = 0; i < report.length; i++) {
-		if(i === 0) {
-			continue;
-		}
-
-		const prev = report[i - 1];
-		const cur = report[i];
-
-		const newDirection = (prev > cur) ? "decreasing" : "increasing";
-		if(newDirection !== direction) {
-			return false;
-		}
-
-		const delta = Math.abs(prev - cur);
-		if (delta === 0 || delta > 3) {
-			return false;
-		}
-	}
-	return true;
+	return findRuleBreak(report) === -1;
 }
+
+function isReportSafeWithProblemDampener(report: number[]): boolean {
+	const dampenedResults = report.map((_, i) => {
+		const dampenedReport = report.filter((_, j) => j !== i);
+		return isReportSafe(dampenedReport);
+	});
+
+	return dampenedResults.some(result => result);
+}
+
+
+type Direction = "+" | "-";
+
+type DirectionCounts = Record<Direction, number>;
+
+/**
+ * +1 is added to the return value if it is a valid index, to account for the fact that the deltas list
+ * does not contain the first number of the report.
+ * 
+ * @returns the first index which breaks the rules in the deltas list.
+ * */
+function findRuleBreak(report: number[]): number {
+	const deltas = report.slice(1).map((reportNum, i) => {
+		const delta = reportNum - report[i];
+
+		return [
+			(delta > 0) ? "+" : "-",
+			Math.abs(delta)
+		] as [Direction, number];
+	});
+
+	const directionCounts = deltas.reduce((acc, [direction, _]) => {
+		return {
+			...acc,
+			[direction]: acc[direction] + 1
+		};
+	}, { "+": 0, "-": 0 } as DirectionCounts);
+
+	const dominantDirection = (directionCounts["+"] > directionCounts["-"]) ? "+" : "-";
+
+	let ruleBreakIndex = deltas.findIndex(([direction, magnitude]) => {
+		return direction !== dominantDirection || magnitude === 0 || magnitude > 3;
+	});
+
+	if(ruleBreakIndex > -1) {
+		ruleBreakIndex += 1;
+	}
+
+	if(ruleBreakIndex === report.length) {
+		ruleBreakIndex = -1;
+	}
+
+	return ruleBreakIndex;
+} 
