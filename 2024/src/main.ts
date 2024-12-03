@@ -1,17 +1,25 @@
-import {
-	Day01Solution,
-	Day02Solution
-} from "./index.ts";
+import { Day01Solution } from "./day01/day01.ts";
+import { Day02Solution } from "./day02/day02.ts";
+import { Day03Solution } from "./day03/day03.ts";
+
+
+function main(): void {
+	const solutions = [
+		new Day01Solution(),
+		new Day02Solution(),
+		new Day03Solution()
+	];
+
+	solutions.forEach((solution, i) => {
+		solution.main();
+
+		if(i < solutions.length - 1) {
+			console.log();
+		}
+	});
+}
 
 
 if(import.meta.main) {
-	const solutions = [
-		new Day01Solution(),
-		new Day02Solution()
-	];
-
-	for(const solution of solutions) {
-		solution.main();
-		console.log();
-	}
+	main();
 }
