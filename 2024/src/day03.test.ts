@@ -7,7 +7,7 @@ describe("Day03Solution", () => {
 	const solution = new Day03Solution();
 
 	const realInput = solution.parseInput(
-		Deno.readTextFileSync("src/day03/input.txt")
+		Deno.readTextFileSync("./src/day03.txt")
 	);
 
 

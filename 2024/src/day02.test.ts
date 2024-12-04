@@ -15,7 +15,7 @@ describe("Day02Solution", () => {
 		[1, 3, 6, 7, 9]
 	];
 
-	const realInput = solution.parseInput(Deno.readTextFileSync('src/day02/input.txt'));
+	const realInput = solution.parseInput(Deno.readTextFileSync("./src/day02.txt"));
 
 
 	describe("parseInput()", () => {

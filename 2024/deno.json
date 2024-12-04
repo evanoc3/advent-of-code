@@ -1,7 +1,4 @@
 {
-  "tasks": {
-    "day01": "deno run -R ./src/day01/day01.ts"
-  },
   "imports": {
     "@std/expect": "jsr:@std/expect@^1.0.8",
     "@std/testing": "jsr:@std/testing@^1.0.5"

@@ -1,4 +1,4 @@
-import { ISolution } from "../common.ts";
+import { ISolution } from "./common.ts";
 
 
 export class Day02Solution implements ISolution<number[][], number, number> {
@@ -24,7 +24,7 @@ export class Day02Solution implements ISolution<number[][], number, number> {
 	}
 
 	public main(): void {
-		const input = Deno.readTextFileSync('src/day02/input.txt');
+		const input = Deno.readTextFileSync("./src/day02.txt");
 		const numbers = this.parseInput(input);
 		console.log("Day 02");
 		console.log("Part 1:", this.part1(numbers));

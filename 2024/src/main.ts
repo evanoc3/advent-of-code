@@ -1,6 +1,6 @@
-import { Day01Solution } from "./day01/day01.ts";
-import { Day02Solution } from "./day02/day02.ts";
-import { Day03Solution } from "./day03/day03.ts";
+import { Day01Solution } from "./day01.ts";
+import { Day02Solution } from "./day02.ts";
+import { Day03Solution } from "./day03.ts";
 
 
 function main(): void {

@@ -492,18 +492,18 @@ The solutions to [Advent of Code 2024](https://adventofcode.com/2024) problems, 
 	<tbody>
 		<tr>
 			<td><strong>Day 1</strong></td>
-			<td><a href="https://github.com/evanoc3/advent-of-code/blob/main/2024/src/day01/day01.ts#L9-L23" target="_blank">✅</a></td>
-			<td><a href="https://github.com/evanoc3/advent-of-code/blob/main/2024/src/day01/day01.ts#L25-L28" target="_blank">✅</a></td>
+			<td><a href="https://github.com/evanoc3/advent-of-code/blob/main/2024/src/day01.ts#L9-L23" target="_blank">✅</a></td>
+			<td><a href="https://github.com/evanoc3/advent-of-code/blob/main/2024/src/day01.ts#L25-L28" target="_blank">✅</a></td>
 		</tr>
 		<tr>
 			<td><strong>Day 2</strong></td>
-			<td><a href="https://github.com/evanoc3/advent-of-code/blob/main/2024/src/day02/day02.ts#L14-L18" target="_blank">✅</a></td>
-			<td><a href="https://github.com/evanoc3/advent-of-code/blob/main/2024/src/day02/day02.ts#L20-L24" target="_blank">✅</a></td>
+			<td><a href="https://github.com/evanoc3/advent-of-code/blob/main/2024/src/day02.ts#L14-L18" target="_blank">✅</a></td>
+			<td><a href="https://github.com/evanoc3/advent-of-code/blob/main/2024/src/day02.ts#L20-L24" target="_blank">✅</a></td>
 		</tr>
 		<tr>
 			<td><strong>Day 3</strong></td>
-			<td><a href="https://github.com/evanoc3/advent-of-code/blob/main/2024/src/day03/day03.ts#L10-L20" target="_blank">✅</a></td>
-			<td><a href="https://github.com/evanoc3/advent-of-code/blob/main/2024/src/day03/day03.ts#L22-L42" target="_blank">✅</a></td>
+			<td><a href="https://github.com/evanoc3/advent-of-code/blob/main/2024/src/day03.ts#L10-L20" target="_blank">✅</a></td>
+			<td><a href="https://github.com/evanoc3/advent-of-code/blob/main/2024/src/day03.ts#L22-L42" target="_blank">✅</a></td>
 		</tr>
 		<tr>
 			<td><strong>Day 4</strong></td>
@@ -625,5 +625,5 @@ The solutions to [Advent of Code 2024](https://adventofcode.com/2024) problems, 
 
 * To test:
 	```sh
-	deno test -R
+	deno test -R ./src
 	```
