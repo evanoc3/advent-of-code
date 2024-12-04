@@ -17,7 +17,12 @@ export class Day04Solution implements ISolution<CharMatrix, number, number> {
 	}
 
 	public part2(input: CharMatrix): number {
-		return 0;
+		let acc = 0;
+		for(const { x, y } of input) {
+			acc += Number(isXMasCenteredAt(input, { x, y }));
+		}
+
+		return acc;
 	}
 
 	public main(): void {
@@ -119,5 +124,38 @@ function countSearchWordsStartingAt(matrix: CharMatrix, { x, y }: Position): num
 
 	return count;
 }
+
+function isXMasCenteredAt(matrix: CharMatrix, { x, y }: Position): boolean {
+	if(matrix.charAt({ x, y }) !== "A") {
+		return false;
+	}
+
+	const topLeft = matrix.charAtTranslation({ x, y }, "top-left", 1);
+	const topRight = matrix.charAtTranslation({ x, y }, "top-right", 1);
+	const bottomLeft = matrix.charAtTranslation({ x, y }, "bottom-left", 1);
+	const bottomRight = matrix.charAtTranslation({ x, y }, "bottom-right", 1);
+
+	if(!topLeft || !topRight || !bottomLeft || !bottomRight) {
+		return false;
+	}
+
+	const charCounts = [topLeft, topRight, bottomLeft, bottomRight].reduce((counts, char) => {
+		return {
+			...counts,
+			[char]: (counts[char] ?? 0) + 1
+		};
+	}, {} as Record<string, number>);
+
+	if(charCounts["M"] !== 2 || charCounts["S"] !== 2) {
+		return false;
+	}
+
+	return (
+		(topLeft === "M" && topRight === "M") ||
+		(topRight === "M" && bottomRight === "M") ||
+		(bottomRight === "M" && bottomLeft === "M") ||
+		(bottomLeft === "M" && topLeft === "M")
+	);
+	}
 
 

@@ -507,8 +507,8 @@ The solutions to [Advent of Code 2024](https://adventofcode.com/2024) problems, 
 		</tr>
 		<tr>
 			<td><strong>Day 4</strong></td>
-			<td></td>
-			<td></td>
+			<td><a href="https://github.com/evanoc3/advent-of-code/blob/main/2024/src/day04.ts#L10-L17" target="_blank">✅</a></td>
+			<td><a href="https://github.com/evanoc3/advent-of-code/blob/main/2024/src/day04.ts#L19-L26" target="_blank">✅</a></td>
 		</tr>
 		<tr>
 			<td><strong>Day 5</strong></td>
