@@ -55,7 +55,7 @@ describe("Day04Solution", () => {
 		});
 
 		it("should return the correct value for the real input", () => {
-			expect(solution.part2(realInput)).toEqual(2858);
+			expect(solution.part2(realInput)).toEqual(1967);
 		});
 
 	});

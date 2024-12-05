@@ -2,6 +2,7 @@ import { Day01Solution } from "./day01.ts";
 import { Day02Solution } from "./day02.ts";
 import { Day03Solution } from "./day03.ts";
 import { Day04Solution } from "./day04.ts";
+import { Day05Solution } from "./day05.ts";
 
 
 function main(): void {
@@ -9,7 +10,8 @@ function main(): void {
 		new Day01Solution(),
 		new Day02Solution(),
 		new Day03Solution(),
-		new Day04Solution()
+		new Day04Solution(),
+		new Day05Solution(),
 	];
 
 	solutions.forEach((solution, i) => {
