@@ -518,12 +518,12 @@ The solutions to [Advent of Code 2024](https://adventofcode.com/2024) problems, 
 		<tr>
 			<td><strong>Day 6</strong></td>
 			<td><a href="https://github.com/evanoc3/advent-of-code/blob/main/2024/src/day06.ts#L108-L136" target="_blank">✅</a></td>
-			<td><a href="https://github.com/evanoc3/advent-of-code/blob/main/2024/src/day06.ts#L138-L160" target="_blank">✅</a>
+			<td><a href="https://github.com/evanoc3/advent-of-code/blob/main/2024/src/day06.ts#L138-L160" target="_blank">✅</a></td>
 		</tr>
 		<tr>
 			<td><strong>Day 7</strong></td>
-			<td></td>
-			<td></td>
+			<td><a href="https://github.com/evanoc3/advent-of-code/blob/main/2024/src/day07.ts#L29-L40" target="_blank">✅</a></td>
+			<td><a href="https://github.com/evanoc3/advent-of-code/blob/main/2024/src/day07.ts#L42-L54" target="_blank">✅</a></td>
 		</tr>
 		<tr>
 			<td><strong>Day 8</strong></td>
