@@ -7,7 +7,7 @@ interface CalibrationEquation {
 }
 
 
-export class Day07Solution implements ISolution<CalibrationEquation[], number, any> {
+export class Day07Solution implements ISolution<CalibrationEquation[], number, number> {
 
   public parseInput(text: string): CalibrationEquation[] {
 		const lines = text.trim().split("\n");
@@ -39,7 +39,7 @@ export class Day07Solution implements ISolution<CalibrationEquation[], number, a
 		return acc;
   }
 
-  public part2(input: CalibrationEquation[]) {
+  public part2(input: CalibrationEquation[]): number {
 		const ops = {
 			"+": (a: number, b: number) => a + b,
 			"*": (a: number, b: number) => a * b,

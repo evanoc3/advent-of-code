@@ -1,4 +1,4 @@
-import type { ISolution } from "./common.ts";
+import type { ISolution, Position2D } from "./common.ts";
 
 
 export class Day04Solution implements ISolution<CharMatrix, number, number> {
@@ -41,13 +41,7 @@ if (import.meta.main) {
 }
 
 
-interface Position {
-	x: number
-	y: number
-}
-
-
-class CharMatrix implements Iterable<{ char: string } & Position> {
+class CharMatrix implements Iterable<{ char: string } & Position2D> {
 
 	private data: string[][];
 	private width: number;
@@ -59,7 +53,7 @@ class CharMatrix implements Iterable<{ char: string } & Position> {
 		this.height = this.data.length;
 	}
 
-	public charAt(pos: Position): string | undefined {
+	public charAt(pos: Position2D): string | undefined {
 		if(!this.isInBounds(pos)) {
 			return undefined;
 		}
@@ -67,12 +61,12 @@ class CharMatrix implements Iterable<{ char: string } & Position> {
 		return this.data[pos.y][pos.x];
 	}
 
-	public charAtTranslation(start: Position, translation: keyof typeof translations, n: number): string | undefined {
+	public charAtTranslation(start: Position2D, translation: keyof typeof translations, n: number): string | undefined {
 		const translatedPosition = translations[translation](start, n);
 		return this.charAt(translatedPosition);
 	}
 
-	public [Symbol.iterator](): Iterator<{ char: string } & Position> {
+	public [Symbol.iterator](): Iterator<{ char: string } & Position2D> {
 		const maxX = this.width * this.height;
 		let i = 0;
 		return {
@@ -88,7 +82,7 @@ class CharMatrix implements Iterable<{ char: string } & Position> {
 		};
 	}
 
-	public isInBounds({ x, y }: Position): boolean {
+	public isInBounds({ x, y }: Position2D): boolean {
 		return y >= 0 && y < this.height && x >= 0 && x < this.width;
 	}
 
@@ -96,18 +90,18 @@ class CharMatrix implements Iterable<{ char: string } & Position> {
 
 
 const translations = {
-	"top-left": (pos: Position, n: number) => ({ x: pos.x - n, y: pos.y - n }),
-	"top": (pos: Position, n: number) => ({ x: pos.x, y: pos.y - n }),
-	"top-right": (pos: Position, n: number) => ({ x: pos.x + n, y: pos.y - n }),
-	"right": (pos: Position, n: number) => ({ x: pos.x + n, y: pos.y }),
-	"bottom-right": (pos: Position, n: number) => ({ x: pos.x + n, y: pos.y + n }),
-	"bottom": (pos: Position, n: number) => ({ x: pos.x, y: pos.y + n }),
-	"bottom-left": (pos: Position, n: number) => ({ x: pos.x - n, y: pos.y + n }),
-	"left": (pos: Position, n: number) => ({ x: pos.x - n, y: pos.y })
+	"top-left": (pos: Position2D, n: number) => ({ x: pos.x - n, y: pos.y - n }),
+	"top": (pos: Position2D, n: number) => ({ x: pos.x, y: pos.y - n }),
+	"top-right": (pos: Position2D, n: number) => ({ x: pos.x + n, y: pos.y - n }),
+	"right": (pos: Position2D, n: number) => ({ x: pos.x + n, y: pos.y }),
+	"bottom-right": (pos: Position2D, n: number) => ({ x: pos.x + n, y: pos.y + n }),
+	"bottom": (pos: Position2D, n: number) => ({ x: pos.x, y: pos.y + n }),
+	"bottom-left": (pos: Position2D, n: number) => ({ x: pos.x - n, y: pos.y + n }),
+	"left": (pos: Position2D, n: number) => ({ x: pos.x - n, y: pos.y })
 };
 
 
-function countSearchWordsStartingAt(matrix: CharMatrix, { x, y }: Position): number {
+function countSearchWordsStartingAt(matrix: CharMatrix, { x, y }: Position2D): number {
 	if(matrix.charAt({ x, y }) !== "X") {
 		return 0;
 	}
@@ -125,7 +119,7 @@ function countSearchWordsStartingAt(matrix: CharMatrix, { x, y }: Position): num
 	return count;
 }
 
-function isXMasCenteredAt(matrix: CharMatrix, { x, y }: Position): boolean {
+function isXMasCenteredAt(matrix: CharMatrix, { x, y }: Position2D): boolean {
 	if(matrix.charAt({ x, y }) !== "A") {
 		return false;
 	}

@@ -1,4 +1,4 @@
-import type { ISolution } from "./common.ts";
+import type { ISolution, Position2D } from "./common.ts";
 
 
 class Map {
@@ -6,7 +6,7 @@ class Map {
 	public width!: number;
 	public height!: number;
 	public guard!: PositionAndDirection;
-	public obstacles: Position[] = [];
+	public obstacles: Position2D[] = [];
 
 	public rotateGuardClockwise(): void {
 		const newDirectionMapping: Record<Direction, Direction> = {
@@ -19,15 +19,15 @@ class Map {
 		this.guard.direction = newDirectionMapping[this.guard.direction];
 	}
 
-	public getPositionsInFrontOf(guard: PositionAndDirection): Position[] {
-		const translations: Record<Direction, (p: Position) => Position> = {
+	public getPositionsInFrontOf(guard: PositionAndDirection): Position2D[] {
+		const translations: Record<Direction, (p: Position2D) => Position2D> = {
 			[Direction.North]: ({ x, y }) => ({ x, y: y - 1 }),
 			[Direction.South]: ({ x, y }) => ({ x, y: y + 1 }),
 			[Direction.East]: ({ x, y }) => ({ x: x + 1, y }),
 			[Direction.West]: ({ x, y }) => ({ x: x - 1, y })
 		};
 
-		const ray: Position[] = [];
+		const ray: Position2D[] = [];
 		let curPosition = { x: guard.x, y: guard.y };
 		while(true) {
 			curPosition = translations[guard.direction](curPosition);
@@ -46,7 +46,7 @@ class Map {
 		return ray;
 	}
 
-	public isObstacleAt(position: Position): boolean {
+	public isObstacleAt(position: Position2D): boolean {
 		return this.obstacles.some(obstacle => obstacle.x === position.x && obstacle.y === position.y);
 	}
 
@@ -174,12 +174,6 @@ if(import.meta.main) {
 }
 
 
-interface Position {
-	x: number;
-	y: number;
-}
-
-
 const enum Direction {
 	North = "n",
 	East = "e",
@@ -188,12 +182,12 @@ const enum Direction {
 }
 
 
-interface PositionAndDirection extends Position {
+interface PositionAndDirection extends Position2D {
 	direction: Direction;
 };
 
 
-function addUniquePositions(positions: Position[], newPositions: Position[]): void {
+function addUniquePositions(positions: Position2D[], newPositions: Position2D[]): void {
 	for(const newPos of newPositions) {
 		if(!positions.some(pos => pos.x === newPos.x && pos.y === newPos.y)) {
 			positions.push(newPos);
@@ -202,7 +196,7 @@ function addUniquePositions(positions: Position[], newPositions: Position[]): vo
 }
 
 
-function isPositionsEqual(posA: Position, posB: Position): boolean {
+function isPositionsEqual(posA: Position2D, posB: Position2D): boolean {
 	return posA.x === posB.x && posA.y === posB.y;
 }
 
