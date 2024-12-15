@@ -8,6 +8,7 @@ import { Day07Solution } from "./day07.ts";
 import { Day08Solution } from "./day08.ts";
 import { Day09Solution } from "./day09.ts";
 import { Day10Solution } from "./day10.ts";
+import { Day11Solution } from "./day11.ts";
 
 
 const solutions = [
@@ -21,12 +22,13 @@ const solutions = [
 	new Day08Solution(),
 	new Day09Solution(),
 	new Day10Solution(),
+	new Day11Solution(),
 ];
 
 
 function main(): void {
 	if(Deno.args.length === 1) {
-		const n = parseInt(Deno.args[0], 10);
+		const n = parseInt(Deno.args[0]);
 		if(isNaN(n)) {
 			console.error(`Error: failed to parse argument "${Deno.args[0]}"`);
 			Deno.exit(1);

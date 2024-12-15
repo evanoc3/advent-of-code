@@ -542,8 +542,8 @@ The solutions to [Advent of Code 2024](https://adventofcode.com/2024) problems, 
 		</tr>
 		<tr>
 			<td><strong>Day 11</strong></td>
-			<td></td>
-			<td></td>
+			<td><a href="https://github.com/evanoc3/advent-of-code/blob/main/2024/src/day11.ts#L10-L34" target="_blank">✅</a></td>
+			<td><a href="https://github.com/evanoc3/advent-of-code/blob/main/2024/src/day11.ts#L36-L72" target="_blank">✅</a></td>
 		</tr>
 		<tr>
 			<td><strong>Day 12</strong></td>
