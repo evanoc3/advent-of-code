@@ -35,7 +35,7 @@ describe("Day07Solution", () => {
 		it("should return the correct value for the real input", () => {
 			expect(
 				solution.part1(realInput)
-			).toEqual(3119088655389);
+			).toEqual(3_119_088_655_389);
 		});
 
 	});
@@ -46,13 +46,13 @@ describe("Day07Solution", () => {
 		it("should return the correct value for the sample input", () => {
 			expect(
 				solution.part2(sampleInput)
-			).toEqual(11387);
+			).toEqual(11_387);
 		});
 
 		it("should return the correct value for the real input", () => {
 			expect(
 				solution.part2(realInput)
-			).toEqual(269);
+			).toEqual(264_184_041_398_847);
 		});
 
 	});

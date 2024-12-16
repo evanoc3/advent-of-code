@@ -1,11 +1,10 @@
-import type { ISolution, Position2D } from "./common.ts";
+import type { ISolution } from "./shared/ISolution.ts";
+import type { Coord2D, Matrix2D } from "./shared/2d.ts";
 
-
-type Matrix2D = number[][];
 
 interface Input {
 	map: Matrix2D
-	trailHeads: Position2D[]
+	trailHeads: Coord2D[]
 }
 
 
@@ -14,7 +13,7 @@ export class Day10Solution implements ISolution<Input, number, number> {
   public parseInput(text: string): Input {
 		const map = text.trim().split("\n").map(line => line.split("").map(char => parseInt(char, 10)));
 
-		const trailHeads: Position2D[] = [];
+		const trailHeads: Coord2D[] = [];
 		for(let y = 0; y < map.length; y++) {
 			for(let x = 0; x < map[y].length; x++) {
 				if(map[y][x] === 0) {
@@ -54,7 +53,7 @@ if(import.meta.main) {
 }
 
 
-function getTrailScore(curPos: Position2D, map: Matrix2D, trailPeaks: Position2D[]): number {
+function getTrailScore(curPos: Coord2D, map: Matrix2D, trailPeaks: Coord2D[]): number {
 	const curHeight = map[curPos.y][curPos.x];
 
 	if(curHeight === 9) {
@@ -74,8 +73,8 @@ function getTrailScore(curPos: Position2D, map: Matrix2D, trailPeaks: Position2D
 }
 
 
-function getAdjacentPositions(pos: Position2D, map: Matrix2D): Position2D[] {
-	const positions: Position2D[] = [];
+function getAdjacentPositions(pos: Coord2D, map: Matrix2D): Coord2D[] {
+	const positions: Coord2D[] = [];
 
 	if(pos.y > 0) {
 		positions.push({ x: pos.x, y: pos.y - 1 });
@@ -94,7 +93,7 @@ function getAdjacentPositions(pos: Position2D, map: Matrix2D): Position2D[] {
 }
 
 
-function getTrailRating(curPos: Position2D, map: Matrix2D): number {
+function getTrailRating(curPos: Coord2D, map: Matrix2D): number {
 	const curHeight = map[curPos.y][curPos.x];
 
 	if(curHeight === 9) {

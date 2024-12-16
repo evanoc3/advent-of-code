@@ -1,14 +1,13 @@
-import type { ISolution, Position2D } from "./common.ts";
+import type { ISolution } from "./shared/ISolution.ts";
+import type { Coord2D, Bounds2D } from "./shared/2d.ts";
 
 
-interface Map {
-	width: number
-	height: number
+interface Map extends Bounds2D {
 	antennae: { [key: string]: Antenna[] }
 }
 
 
-interface Antenna extends Position2D {
+interface Antenna extends Coord2D {
   frequency: string
 }
 
@@ -77,14 +76,14 @@ if(import.meta.main) {
 }
 
 
-function getAntennaAtPosition({ x, y }: Position2D, antennae: Antenna[]): Antenna | undefined {
+function getAntennaAtPosition({ x, y }: Coord2D, antennae: Antenna[]): Antenna | undefined {
   return antennae.find(antennae => 
     (antennae.x === x && antennae.y === y)
   );
 }
 
 
-function isPositionAntinode({ x, y }: Position2D, map: Map): boolean {
+function isPositionAntinode({ x, y }: Coord2D, map: Map): boolean {
   for(const antenna of map.antennae.all) {
     if(antenna.x === x && antenna.y === y) {
       continue;
@@ -92,7 +91,7 @@ function isPositionAntinode({ x, y }: Position2D, map: Map): boolean {
     const [_, translation] = getTranslation({ x, y }, antenna);
     const doubleTranslatedPosition = translation(antenna);
 
-    if(!isPositionInBounds(doubleTranslatedPosition, { x: map.width, y: map.height })) {
+    if(!isPositionInBounds(doubleTranslatedPosition, map)) {
       continue;
     }
 
@@ -105,22 +104,22 @@ function isPositionAntinode({ x, y }: Position2D, map: Map): boolean {
 }
 
 
-function getTranslation(posA: Position2D, posB: Position2D): [Position2D, (pos: Position2D) => Position2D] {
+function getTranslation(posA: Coord2D, posB: Coord2D): [Coord2D, (pos: Coord2D) => Coord2D] {
   const deltaX = posB.x - posA.x;
   const deltaY = posB.y - posA.y;
-  const translation = ({ x, y }: Position2D) => ({  x: x + deltaX, y: y + deltaY });
+  const translation = ({ x, y }: Coord2D) => ({  x: x + deltaX, y: y + deltaY });
 
   return [{ x: deltaX, y: deltaY }, translation];
 }
 
 
-function isPositionInBounds(pos: Position2D, bounds: Position2D): boolean {
-  return pos.x >= 0 && pos.x < bounds.x && pos.y >= 0 && pos.y < bounds.y;
+function isPositionInBounds(pos: Coord2D, bounds: Bounds2D): boolean {
+  return pos.x >= 0 && pos.x < bounds.width && pos.y >= 0 && pos.y < bounds.height;
 }
 
 
-function getAntinodesWithResonance(map: Map): Position2D[] {
-  const antinodes: Position2D[] = [];
+function getAntinodesWithResonance(map: Map): Coord2D[] {
+  const antinodes: Coord2D[] = [];
 
   for(const firstAntenna of map.antennae.all) {
     for(const secondAntenna of map.antennae[firstAntenna.frequency]) {
@@ -129,14 +128,14 @@ function getAntinodesWithResonance(map: Map): Position2D[] {
       }
 
       const [{ x: deltaX, y: deltaY }, translation] = getTranslation(firstAntenna, secondAntenna);
-      const inverseTranslation = ({ x, y }: Position2D) => ({ x: x - deltaX, y: y - deltaY });
+      const inverseTranslation = ({ x, y }: Coord2D) => ({ x: x - deltaX, y: y - deltaY });
 
       let arcStartingPosition = inverseTranslation(firstAntenna);
-      while(isPositionInBounds(arcStartingPosition, { x: map.width, y: map.height })) {
+      while(isPositionInBounds(arcStartingPosition, map)) {
         arcStartingPosition = inverseTranslation(arcStartingPosition);
       }
 
-      const arcPositions = getPositionsOnArc(arcStartingPosition, { x: map.width, y: map.height }, translation);
+      const arcPositions = getPositionsOnArc(arcStartingPosition, map, translation);
       for(const arcPosition of arcPositions) {
         if(!antinodes.some(antinode => antinode.x === arcPosition.x && antinode.y === arcPosition.y)) {
           antinodes.push(arcPosition);
@@ -149,8 +148,8 @@ function getAntinodesWithResonance(map: Map): Position2D[] {
 }
 
 
-function getPositionsOnArc(initialPosition: Position2D, bounds: Position2D, translation: (pos: Position2D) => Position2D): Position2D[] {
-  const positions: Position2D[] = [];
+function getPositionsOnArc(initialPosition: Coord2D, bounds: Bounds2D, translation: (pos: Coord2D) => Coord2D): Coord2D[] {
+  const positions: Coord2D[] = [];
 
   let cur = translation(initialPosition);
 

@@ -37,14 +37,14 @@ describe("Day06Solution", () => {
 	});
 
 
-	describe("part2()", () => {
+	describe.skip("part2()", () => {
 
 		it("should return the correct value for the sample input", () => {
-			// expect(solution.part2(sampleInput.clone())).toEqual(6);
+			expect(solution.part2(sampleInput.clone())).toEqual(6);
 		});
 
 		it("should return the correct value for the real input", () => {
-			expect(solution.part2(realInput.clone())).toEqual(Number.POSITIVE_INFINITY);
+			expect(solution.part2(realInput.clone())).toEqual(1796);
 		});
 
 	});

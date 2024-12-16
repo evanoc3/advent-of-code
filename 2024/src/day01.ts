@@ -1,4 +1,5 @@
-import { ISolution } from "./common.ts";
+import { ISolution } from "./shared/ISolution.ts";
+
 
 export class Day01Solution implements ISolution<string[], number, number> {
 

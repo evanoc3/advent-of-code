@@ -1,4 +1,6 @@
-import type { ISolution, Position2D } from "./common.ts";
+import type { ISolution } from "./shared/ISolution.ts";
+import { type Bounds2D, type Coord2D, Direction, directionTranslations } from "./shared/2d.ts";
+import { coordIsWithinBounds } from "./shared/2d.ts";
 
 
 export class Day04Solution implements ISolution<CharMatrix, number, number> {
@@ -41,11 +43,11 @@ if (import.meta.main) {
 }
 
 
-class CharMatrix implements Iterable<{ char: string } & Position2D> {
+class CharMatrix implements Bounds2D, Iterable<{ char: string } & Coord2D> {
 
 	private data: string[][];
-	private width: number;
-	private height: number;
+	readonly width: number;
+	readonly height: number;
 
 	constructor(data: string) {
 		this.data = data.trim().split("\n").map(line => line.split(""));
@@ -53,20 +55,20 @@ class CharMatrix implements Iterable<{ char: string } & Position2D> {
 		this.height = this.data.length;
 	}
 
-	public charAt(pos: Position2D): string | undefined {
-		if(!this.isInBounds(pos)) {
+	public charAt(pos: Coord2D): string | undefined {
+		if(!coordIsWithinBounds(pos, this)) {
 			return undefined;
 		}
 
 		return this.data[pos.y][pos.x];
 	}
 
-	public charAtTranslation(start: Position2D, translation: keyof typeof translations, n: number): string | undefined {
-		const translatedPosition = translations[translation](start, n);
+	public charAtTranslation(start: Coord2D, translationDirection: Direction, n: number): string | undefined {
+		const translatedPosition = directionTranslations[translationDirection](start, n);
 		return this.charAt(translatedPosition);
 	}
 
-	public [Symbol.iterator](): Iterator<{ char: string } & Position2D> {
+	public [Symbol.iterator](): Iterator<{ char: string } & Coord2D> {
 		const maxX = this.width * this.height;
 		let i = 0;
 		return {
@@ -82,36 +84,20 @@ class CharMatrix implements Iterable<{ char: string } & Position2D> {
 		};
 	}
 
-	public isInBounds({ x, y }: Position2D): boolean {
-		return y >= 0 && y < this.height && x >= 0 && x < this.width;
-	}
-
 }
 
 
-const translations = {
-	"top-left": (pos: Position2D, n: number) => ({ x: pos.x - n, y: pos.y - n }),
-	"top": (pos: Position2D, n: number) => ({ x: pos.x, y: pos.y - n }),
-	"top-right": (pos: Position2D, n: number) => ({ x: pos.x + n, y: pos.y - n }),
-	"right": (pos: Position2D, n: number) => ({ x: pos.x + n, y: pos.y }),
-	"bottom-right": (pos: Position2D, n: number) => ({ x: pos.x + n, y: pos.y + n }),
-	"bottom": (pos: Position2D, n: number) => ({ x: pos.x, y: pos.y + n }),
-	"bottom-left": (pos: Position2D, n: number) => ({ x: pos.x - n, y: pos.y + n }),
-	"left": (pos: Position2D, n: number) => ({ x: pos.x - n, y: pos.y })
-};
-
-
-function countSearchWordsStartingAt(matrix: CharMatrix, { x, y }: Position2D): number {
+function countSearchWordsStartingAt(matrix: CharMatrix, { x, y }: Coord2D): number {
 	if(matrix.charAt({ x, y }) !== "X") {
 		return 0;
 	}
 
 	let count = 0;
 
-	for(const translationDirection of Object.keys(translations)) {
-		if(matrix.charAtTranslation({ x, y }, translationDirection as keyof typeof translations, 1) === "M" &&
-			matrix.charAtTranslation({ x, y }, translationDirection as keyof typeof translations, 2) === "A" &&
-			matrix.charAtTranslation({ x, y }, translationDirection as keyof typeof translations, 3) === "S") {
+	for(const translationDirection of Object.values(Direction)) {
+		if(matrix.charAtTranslation({ x, y }, translationDirection, 1) === "M" &&
+			matrix.charAtTranslation({ x, y }, translationDirection, 2) === "A" &&
+			matrix.charAtTranslation({ x, y }, translationDirection, 3) === "S") {
 			count += 1;
 		}
 	}
@@ -119,15 +105,15 @@ function countSearchWordsStartingAt(matrix: CharMatrix, { x, y }: Position2D): n
 	return count;
 }
 
-function isXMasCenteredAt(matrix: CharMatrix, { x, y }: Position2D): boolean {
+function isXMasCenteredAt(matrix: CharMatrix, { x, y }: Coord2D): boolean {
 	if(matrix.charAt({ x, y }) !== "A") {
 		return false;
 	}
 
-	const topLeft = matrix.charAtTranslation({ x, y }, "top-left", 1);
-	const topRight = matrix.charAtTranslation({ x, y }, "top-right", 1);
-	const bottomLeft = matrix.charAtTranslation({ x, y }, "bottom-left", 1);
-	const bottomRight = matrix.charAtTranslation({ x, y }, "bottom-right", 1);
+	const topLeft = matrix.charAtTranslation({ x, y }, Direction.NorthWest, 1);
+	const topRight = matrix.charAtTranslation({ x, y }, Direction.NorthEast, 1);
+	const bottomLeft = matrix.charAtTranslation({ x, y }, Direction.SouthWest, 1);
+	const bottomRight = matrix.charAtTranslation({ x, y }, Direction.SouthEast, 1);
 
 	if(!topLeft || !topRight || !bottomLeft || !bottomRight) {
 		return false;

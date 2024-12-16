@@ -13,16 +13,16 @@ describe("Day04Solution", () => {
 
 	describe("part1()", () => {
 		const sampleInput = solution.parseInput(
-			"MMMSXXMASM\n" +
-			"MSAMXMSMSA\n" +
-			"AMXSXMAAMM\n" +
-			"MSAMASMSMX\n" +
-			"XMASAMXAMM\n" +
-			"XXAMMXXAMA\n" +
-			"SMSMSASXSS\n" +
-			"SAXAMASAAA\n" +
-			"MAMMMXMMMM\n" +
-			"MXMXAXMASX\n"
+			"....XXMAS.\n" +
+			".SAMXMS...\n" +
+			"...S..A...\n" +
+			"..A.A.MS.X\n" +
+			"XMASAMX.MM\n" +
+			"X.....XA.A\n" +
+			"S.S.S.S.SS\n" +
+			".A.A.A.A.A\n" +
+			"..M.M.M.MM\n" +
+			".X.X.XMASX\n"
 		);
 
 		it("should return the correct value for the sample input", () => {

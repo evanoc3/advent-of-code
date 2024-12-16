@@ -1,38 +1,32 @@
-import type { ISolution, Position2D } from "./common.ts";
+import type { ISolution } from "./shared/ISolution.ts";
+import { type Coord2D, type Bounds2D, type Vector2D, Direction, directionTranslations, coordIsWithinBounds, coordsAreEqual, vectorsAreEqual } from "./shared/2d.ts";
 
 
-class Map {
+class Map implements Bounds2D {
 
 	public width!: number;
 	public height!: number;
-	public guard!: PositionAndDirection;
-	public obstacles: Position2D[] = [];
+	public guard!: Vector2D;
+	public obstacles: Coord2D[] = [];
 
 	public rotateGuardClockwise(): void {
-		const newDirectionMapping: Record<Direction, Direction> = {
+		const newDirectionMapping: Partial<Record<Direction, Direction>> = {
 			[Direction.North]: Direction.East,
 			[Direction.East]: Direction.South,
 			[Direction.South]: Direction.West,
 			[Direction.West]: Direction.North
 		};
 
-		this.guard.direction = newDirectionMapping[this.guard.direction];
+		this.guard.direction = newDirectionMapping[this.guard.direction]!;
 	}
 
-	public getPositionsInFrontOf(guard: PositionAndDirection): Position2D[] {
-		const translations: Record<Direction, (p: Position2D) => Position2D> = {
-			[Direction.North]: ({ x, y }) => ({ x, y: y - 1 }),
-			[Direction.South]: ({ x, y }) => ({ x, y: y + 1 }),
-			[Direction.East]: ({ x, y }) => ({ x: x + 1, y }),
-			[Direction.West]: ({ x, y }) => ({ x: x - 1, y })
-		};
-
-		const ray: Position2D[] = [];
+	public getPositionsInFrontOf(guard: Vector2D): Coord2D[] {
+		const ray: Coord2D[] = [];
 		let curPosition = { x: guard.x, y: guard.y };
 		while(true) {
-			curPosition = translations[guard.direction](curPosition);
+			curPosition = directionTranslations[guard.direction](curPosition);
 
-			if(curPosition.x < 0 || curPosition.x >= this.width || curPosition.y < 0 || curPosition.y >= this.height) {
+			if(!coordIsWithinBounds(curPosition, this)) {
 				break;
 			}
 
@@ -46,8 +40,8 @@ class Map {
 		return ray;
 	}
 
-	public isObstacleAt(position: Position2D): boolean {
-		return this.obstacles.some(obstacle => obstacle.x === position.x && obstacle.y === position.y);
+	public isObstacleAt(position: Coord2D): boolean {
+		return this.obstacles.some(obstacle => coordsAreEqual(obstacle, position));
 	}
 
 	public clone(): Map {
@@ -144,7 +138,7 @@ export class Day06Solution implements ISolution<Map, number, number> {
 
 				const newObstaclePosition = { x, y };
 
-				if(newMap.isObstacleAt(newObstaclePosition) || isPositionsEqual(newMap.guard, newObstaclePosition)) {
+				if(newMap.isObstacleAt(newObstaclePosition) || coordsAreEqual(newMap.guard, newObstaclePosition)) {
 					continue;
 				}
 
@@ -174,20 +168,7 @@ if(import.meta.main) {
 }
 
 
-const enum Direction {
-	North = "n",
-	East = "e",
-	South = "s",
-	West = "w"
-}
-
-
-interface PositionAndDirection extends Position2D {
-	direction: Direction;
-};
-
-
-function addUniquePositions(positions: Position2D[], newPositions: Position2D[]): void {
+function addUniquePositions(positions: Coord2D[], newPositions: Coord2D[]): void {
 	for(const newPos of newPositions) {
 		if(!positions.some(pos => pos.x === newPos.x && pos.y === newPos.y)) {
 			positions.push(newPos);
@@ -196,19 +177,8 @@ function addUniquePositions(positions: Position2D[], newPositions: Position2D[])
 }
 
 
-function isPositionsEqual(posA: Position2D, posB: Position2D): boolean {
-	return posA.x === posB.x && posA.y === posB.y;
-}
-
-
-function isPositionsAndDirectionsEqual(posA: PositionAndDirection, posB: PositionAndDirection): boolean {
-	return isPositionsEqual(posA, posB) && posA.direction === posB.direction;
-
-}
-
-
 function doesGuardPathLoop(map: Map): boolean {
-	const visitedPositions: PositionAndDirection[] = [
+	const visitedPositions: Vector2D[] = [
 		structuredClone(map.guard)
 	];
 
@@ -225,10 +195,10 @@ function doesGuardPathLoop(map: Map): boolean {
 		}
 
 		for(const newPos of forwardLine) {
-			const visited: PositionAndDirection = {
+			const visited: Vector2D = {
 				...newPos, direction: map.guard.direction
 			};
-			if(visitedPositions.some(pos => isPositionsAndDirectionsEqual(pos, visited))) {
+			if(visitedPositions.some(pos => vectorsAreEqual(pos, visited))) {
 				return true;
 			}
 
@@ -242,9 +212,10 @@ function doesGuardPathLoop(map: Map): boolean {
 		if(isLineEndedAtObstacle)	{
 			map.rotateGuardClockwise();
 
-			if(visitedPositions.some(pos => isPositionsAndDirectionsEqual(pos, map.guard))) {
+			if(visitedPositions.some(pos => vectorsAreEqual(pos, map.guard))) {
 				return true;
-			} else {
+			}
+			else {
 				visitedPositions.push(structuredClone(map.guard));
 			}
 		}

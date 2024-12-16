@@ -1,4 +1,4 @@
-import type { ISolution } from "./common.ts";
+import type { ISolution } from "./shared/ISolution.ts";
 
 
 interface Input {

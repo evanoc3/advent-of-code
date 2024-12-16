@@ -11,9 +11,3 @@ export interface ISolution<I, T1, T2> {
 	/** Called when the solution module is run directly. Should print out the answers to the two parts of the problem. */
 	main(): void;
 }
-
-
-export interface Position2D {
-	x: number
-	y: number
-}
