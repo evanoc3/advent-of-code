@@ -20,6 +20,10 @@ export function coordsAreEqual(coordA: Coord2D, coordB: Coord2D): boolean {
 	return coordA.x === coordB.x && coordA.y === coordB.y;
 }
 
+export function containsCoord(coords: Coord2D[], coord: Coord2D): boolean {
+	return coords.some(c => coordsAreEqual(c, coord));
+}
+
 export type Matrix2D = number[][];
 
 export enum Direction {

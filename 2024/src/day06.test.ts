@@ -37,13 +37,15 @@ describe("Day06Solution", () => {
 	});
 
 
-	describe.skip("part2()", () => {
+	describe("part2()", () => {
 
 		it("should return the correct value for the sample input", () => {
 			expect(solution.part2(sampleInput.clone())).toEqual(6);
 		});
 
-		it("should return the correct value for the real input", () => {
+		// this one test cases takes >10min to run
+		// only enable it if you really want to
+		it.skip("should return the correct value for the real input", () => {
 			expect(solution.part2(realInput.clone())).toEqual(1796);
 		});
 

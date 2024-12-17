@@ -16,7 +16,8 @@
 				"--inspect-wait",
 				"--allow-all"
 			],
-			"attachSimplePort": 9229
+			"attachSimplePort": 9229,
+			"outputCapture": "std"
 		},
 		{
 			"request": "launch",
@@ -30,7 +31,8 @@
 				"--inspect-wait",
 				"--allow-all"
 			],
-			"attachSimplePort": 9229
+			"attachSimplePort": 9229,
+			"outputCapture": "std"
 		}
 	]
 }
