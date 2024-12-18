@@ -10,6 +10,7 @@ import { Day09Solution } from "./day09.ts";
 import { Day10Solution } from "./day10.ts";
 import { Day11Solution } from "./day11.ts";
 import { Day12Solution } from "./day12.ts";
+import { Day13Solution } from "./day13.ts";
 
 
 const solutions = [
@@ -25,6 +26,7 @@ const solutions = [
 	new Day10Solution(),
 	new Day11Solution(),
 	new Day12Solution(),
+	new Day13Solution(),
 ];
 
 
